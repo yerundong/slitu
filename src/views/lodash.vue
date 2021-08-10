@@ -8,16 +8,25 @@
 // import eq from 'lodash/eq' // 24.11kb
 // import isEqual from 'lodash/isEqual' // 23.09kb
 import _ from 'lodash'
-import { doubleNumber } from '@/util'
+import {
+	displace,
+	displaceNil,
+	add,
+	chain,
+	removeInvalidProp,
+	removeInvalidPropDeep,
+} from '@/util'
+console.log(add)
 
-// import extend from 'extend'
 export default {
 	name: 'lodash',
 	components: {},
 	created() {
 		console.clear()
-		console.log(doubleNumber(null))
-		// console.log(_.defaults(true, { a: 1 }))
+		const obj = { a: 1, b: null, c: undefined, d: NaN, e: '', f: { g: '' } }
+		Object.setPrototypeOf(obj, { ddd: null })
+		console.log(removeInvalidPropDeep(obj))
+		console.log(obj)
 	},
 }
 </script>

@@ -1,4 +1,4 @@
-import { isNotInTypes, isLikeNumber, getType } from './type'
+import { isLikeNumber, getType, checkTypeOrError } from './type'
 
 // import { create, all } from 'mathjs'
 // const config = {
@@ -43,26 +43,36 @@ import { isNotInTypes, isLikeNumber, getType } from './type'
 // console.log((0.1).add(0.2))
 
 /**
- * 数字双位格式化
- * @param {likeNumber} value
+ * 获取数字整数位的位数
+ * @param {Number,LikeNumber} value
  * @returns {String}
- * 注意非 likeNumber 类型，替换为 0
  */
-export const doubleNumber = (value) => {
+export const getIntFigure = (value) => {
 	if (!isLikeNumber(value))
 		throw new Error(`Expected Number or LikeNumber, got ${getType(value)}`)
+	const value_num = Number(value)
+	return parseInt(Math.abs(value_num)).toString().length
+}
 
-	const value_ = Number(value)
-	let sym = ''
-	if (number < 0) {
-		sym = '-'
-	}
-
-	let abs = Math.abs(value_)
-
-	if (abs < 10 && abs >= 0) {
-		return sym + '0' + abs
+/**
+ * 补足整数数位
+ * @param {Number,LikeNumber} value
+ * @param {Number} figture 位数
+ * @returns {String}
+ */
+export const completeIntDigit = (value, figture = 2) => {
+	if (!isLikeNumber(value))
+		throw new Error(`Expected Number or LikeNumber, got ${getType(value)}`)
+	checkTypeOrError(figture, 'Number')
+	if (figture < 1) figture = 1
+	const value_num = Number(value)
+	const figture_ = getIntFigure(value)
+	if (figture_ >= figture) {
+		return value.toString()
 	} else {
-		return value_.toString()
+		const diffFig = figture - figture_
+		const value_abs = Math.abs(value_num)
+		const symbol = value_num < 0 ? '-' : ''
+		return `${symbol}${'0'.repeat(diffFig)}${value_abs}`
 	}
 }
