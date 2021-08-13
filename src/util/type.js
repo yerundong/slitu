@@ -1,12 +1,10 @@
-import isNaN from 'lodash/isNaN'
-
 /**
  * 获取数据类型
  * 注意：此处将 NaN 作为一个单独的类型，标识为'NaN'，而非'Number'，以下设计类型的均是如此，不再标注
  */
 export const getType = (value) => {
 	const type = Object.prototype.toString.call(value).slice(8, -1)
-	if (isNaN(value)) return 'NaN'
+	if (Number.isNaN(value)) return 'NaN'
 	return type
 }
 
@@ -67,7 +65,7 @@ export const isLikeNumber = (value) => {
 	if (isNotInTypes(value, ['String', 'Number'])) return false
 	if (value === '') return false
 	let value_ = Number(value)
-	if (isNaN(value_)) return false
+	if (Number.isNaN(value_)) return false
 	return true
 }
 

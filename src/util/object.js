@@ -1,6 +1,5 @@
 import { checkTypeOrError, isVoid } from './type'
-import isPlainObject from 'lodash/isPlainObject'
-import cloneDeep from 'lodash/cloneDeep'
+import { isPlainObject, cloneDeep } from 'lodash'
 
 /**
  * 移除对象无效属性
