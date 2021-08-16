@@ -16,15 +16,16 @@ export default {
 	name: 'lodash',
 	components: {},
 	created() {
-		// console.log(new Currency('-$19**99.9&&**&-9*9-.-99-*9'))
-
-		Currency.setConfig({ decimalSeparator: '*' })
-		console.log(Currency.parse('$-19**99.9&&**&-9*9-.-99-*9'))
+		console.clear()
+		// Currency.setConfig({ decimalSeparator: '*' })
+		console.log(Currency.parse(new Currency(-Infinity).format()))
+		console.log(new Currency('-$Infinity'))
+		console.log(new Currency('+Infinity'))
+		console.log(new Currency('-0'))
 
 		// console.clear()
 		// console.log(new Decm('999,999,999'))
-		console.log(new Currency(123456789.123456789))
-		console.log(new Currency('123456789.123456789'))
+		console.log(new Currency('-.123456789123456789'))
 		console.log(new Currency('123456789.12345.6789'))
 		console.log(new Currency('123456789.'))
 		console.log(new Currency('.123456789'))
@@ -34,28 +35,11 @@ export default {
 		console.log(Currency.getInstance(123))
 
 		console.log('----------------------------')
-		console.log(new currency('-12345-678-9').format())
-		console.log(new currency('.123456789'))
-		console.log(new currency('123,456,789*123'))
-		console.log(
-			currency('123456789.123456789', {
-				symbol: '￥',
-				precision: 9,
-			}).format()
-		)
-		console.log(
-			currency('123456789.12345.6789', {
-				symbol: '￥',
-				precision: 10,
-			})
-		)
-
-		function fn(a) {
-			a.b = 2
-		}
-		const obj = { b: 1 }
-		fn(obj)
-		console.log(obj)
+		console.log(new currency('Infinity'))
+		console.log(new currency(-Infinity).format())
+		console.log(new currency('Infinity'))
+		console.log(new currency(-0))
+		console.log(new currency(+0))
 	},
 }
 </script>
