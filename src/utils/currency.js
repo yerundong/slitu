@@ -157,23 +157,23 @@ function strValParse(value, config = {}) {
 
 	const ds = config.decimalSeparator || '.'
 	const reg_1 = new RegExp(
-		`[^\\d\\${ds}-]|(?<=\\d+.*)-|\\${ds}(?=.*\\${ds})`,
+		`[^\\d\\${ds}-]|\\${ds}(?=.*\\${ds})`,
 		'g'
 	)
 	const reg_2 = new RegExp(`\\${ds}`, 'g')
 	value_ = value.replace(reg_1, '').replace(reg_2, '.')
+	
+	let sign = ''
+	if (/^-/.test(value_)) {
+		sign = '-'
+		value_ = value_.replace(/-/g, '')
+	}
 
 	if (!isLikeNumber(value_)) {
 		return {
 			value: NaN,
 			exactValue: 'NaN',
 		}
-	}
-
-	let sign = ''
-	if (/^-/.test(value_)) {
-		sign = '-'
-		value_ = value_.replace(/^-/, '')
 	}
 
 	value_ = value_.replace(/^0+(?=.)|\.+$/g, '').replace(/^\.+/, '0.')

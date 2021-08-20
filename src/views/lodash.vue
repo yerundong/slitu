@@ -1,5 +1,10 @@
 <template>
-	<strong>lodash</strong>
+	<div>
+		<strong>lodash</strong>
+		<div>
+			{{a}}
+		</div>
+	</div>
 </template>
 
 <script>
@@ -13,10 +18,17 @@ import { add, sub, mul, div, toFixed, dayjs, Decimal, Currency } from '@/utils'
 export default {
 	name: 'lodash',
 	components: {},
+	data(){
+		return{
+			a: ''
+		}
+	},
 	created() {
-		console.clear()
-		console.log(dayjs())
-		console.log(dayjs('2021-02-8').format('DD/MM/YYYY'))
+		// console.clear()
+		// console.log(dayjs())
+		// console.log(dayjs('2021-02-8').format('DD/MM/YYYY'))
+		this.a = Currency.parse('-$-2021-kkk-').exactValue
+		console.log(this.a);
 	},
 }
 </script>
