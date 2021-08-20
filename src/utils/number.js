@@ -1,12 +1,13 @@
 import { isLikeNumber, getType, checkTypeOrError } from './type'
-import Decm from 'decimal.js'
-import currency from 'currency.js'
+import Decimal from 'decimal.js'
 
-export const add = Decm.add.bind(Decm) // +
-export const sub = Decm.sub.bind(Decm) // -
-export const mul = Decm.mul.bind(Decm) // ×
-export const div = Decm.div.bind(Decm) // ÷
-export const sum = Decm.sum.bind(Decm)
+export const add = 1 // +
+export const sub = Decimal.sub.bind(Decimal) // -
+export const mul = Decimal.mul.bind(Decimal) // ×
+export const div = Decimal.div.bind(Decimal) // ÷
+export const sum = Decimal.sum.bind(Decimal)
+export const toFixed = (value, dp, rm) => new Decimal(value).toFixed(dp, rm).valueOf()
+export const toDP = (value, dp, rm) => new Decimal(value).toDP(dp, rm).valueOf()
 
 /**
  * 获取数字整数位的位数

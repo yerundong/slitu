@@ -41,12 +41,12 @@ export const isNotInTypes = (value, type_array = []) => {
 }
 
 /**
- * 判断数据是否是无效数据，包括：undefined, null, NaN
+ * 判断数据是否是 undefined, null, NaN 之一
  */
 export const isInvalid = (value) => [undefined, null, NaN].includes(value)
 
 /**
- * 判断数据是否是无用数据，包括：undefined, null, NaN, ''
+ * 判断数据是否是 undefined, null, NaN, '' 之一
  */
 export const isVoid = (value) => [undefined, null, NaN, ''].includes(value)
 

@@ -18,6 +18,8 @@ class Currency {
 			this.value = NaN
 			this.exactValue = 'NaN'
 		}
+		
+		this.isNaN = Number.isNaN(this.value)
 
 		// 设置实例的 config
 		// config 优先于 Currency.config
@@ -33,6 +35,8 @@ class Currency {
 		groupSeparator: ',', // 数位分隔符
 		groupSize: 4, // 数位分隔组的个数，默认每3位分隔，即千位分隔法
 		suffix: '', // 后缀
+		precision: 2,
+		completion: true
 	}
 
 	// 设置实例的 config
@@ -63,7 +67,7 @@ class Currency {
 			ev = exactValue.replace(/^-/, '')
 		}
 
-		if (/\d/g.test(ev)) {
+		if (/\d/g.test(ev)) {// 数字类型的数字
 			const arr = ev.split('.')
 			const intStr = arr[0]
 			const decStr = arr[1]
@@ -82,11 +86,11 @@ class Currency {
 			} else {
 				return `${sign}${prefix}${intStr_}${suffix}`
 			}
-		} else {
+		} else {// 字母类型的数字，如 Infinity
 			return `${sign}${prefix}${ev}${suffix}`
 		}
 	}
-
+	
 	// 设置类的 config
 	static setConfig(config) {
 		Object.assign(Currency.config, config)
