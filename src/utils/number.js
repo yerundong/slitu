@@ -1,13 +1,50 @@
 import { isLikeNumber, getType, checkTypeOrError } from './type'
 import Decimal from 'decimal.js'
+import Currency from 'light-currency'
 
-export const add = 1 // +
+// Decimal
+export const add = Decimal.add.bind(Decimal) // +
 export const sub = Decimal.sub.bind(Decimal) // -
 export const mul = Decimal.mul.bind(Decimal) // ×
 export const div = Decimal.div.bind(Decimal) // ÷
 export const sum = Decimal.sum.bind(Decimal)
-export const toFixed = (value, dp, rm) => new Decimal(value).toFixed(dp, rm).valueOf()
+export const toFixed = (value, dp, rm) =>
+	new Decimal(value).toFixed(dp, rm).valueOf()
 export const toDP = (value, dp, rm) => new Decimal(value).toDP(dp, rm).valueOf()
+
+// Currency
+Currency.setConfig({
+	prefix: '￥',
+	decimalSeparator: '.',
+	groupSeparator: ',',
+	groupSize: 4,
+	suffix: '',
+})
+Currency.extend('add', function(value) {
+	return this.setValue(add(this.value, value).valueOf())
+})
+
+Currency.extend('sub', function(value) {
+	return this.setValue(sub(this.value, value).valueOf())
+})
+
+Currency.extend('mul', function(value) {
+	return this.setValue(mul(this.value, value).valueOf())
+})
+
+Currency.extend('div', function(value) {
+	return this.setValue(mul(this.value, value).valueOf())
+})
+
+Currency.extend('toFixed', function(dp) {
+	return this.setValue(toFixed(this.value, dp))
+})
+
+Currency.extend('toDP', function(dp) {
+	return this.setValue(toDP(this.value, dp))
+})
+
+export { Currency }
 
 /**
  * 获取数字整数位的位数
