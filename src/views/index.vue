@@ -1,13 +1,28 @@
 <template>
 	<div>
-		<router-link to="/utils">utils</router-link> |
-		<router-link to="/lodash">lodash</router-link>
+		<strong>utils测试</strong>
 	</div>
 </template>
 
 <script>
+import * as utils from '@/utils'
+import {
+	objectToFormData,
+	isArr,
+	isObj,
+	isNul,
+	isUndef,
+	isNaN,
+	isLikeNum,
+} from '@/utils'
+
 export default {
 	name: 'index',
 	components: {},
+	mounted() {
+		console.log(utils)
+		const value = 1
+		console.log(isLikeNum(value))
+	},
 }
 </script>

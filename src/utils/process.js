@@ -27,3 +27,14 @@ export const displaceInvalid = (value, replacement) => {
 export const displaceVoid = (value, replacement) => {
 	return displace(value, replacement, [NaN, undefined, null, ''])
 }
+
+/**
+ * 值映射
+ */
+export const valueMap = (value, list = []) => {
+	checkTypeOrError(list, 'Array')
+	for (let i = 0, item; item = list[i]; i++) {
+		if(item.value === value)
+			return item.name
+	}
+}

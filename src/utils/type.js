@@ -41,6 +41,74 @@ export const isNotInTypes = (value, type_array = []) => {
 }
 
 /**
+ * 是否 Number 类型（不包含NaN）
+ */
+export const isNum = (value) => {
+	return getType(value) === 'Number'
+}
+
+/**
+ * 判断是否类数字(LikeNumber)
+ * 类数字：123、"123"
+ */
+export const isLikeNum = (value) => {
+	if (isNotInTypes(value, ['String', 'Number'])) return false
+	if (value === '') return false
+	let value_ = Number(value)
+	if (Number.isNaN(value_)) return false
+	return true
+}
+
+/**
+ * 是否 Boolean 类型
+ */
+export const isBool = (value) => {
+	return getType(value) === 'Boolean'
+}
+
+/**
+ * 是否 String 类型
+ */
+export const isStr = (value) => {
+	return getType(value) === 'String'
+}
+
+/**
+ * 是否 Array 类型
+ */
+export const isArr = (value) => {
+	return Array.isArray(value)
+}
+
+/**
+ * 是否 Object 类型
+ */
+export const isObj = (value) => {
+	return getType(value) === 'Object'
+}
+
+/**
+ * 是否 null 类型
+ */
+export const isNul = (value) => {
+	return value === null
+}
+
+/**
+ * 是否 undefined 类型
+ */
+export const isUndef = (value) => {
+	return value === undefined
+}
+
+/**
+ * 是否是 NaN
+ */
+export const isNaN = (value) => {
+	return Number.isNaN(value)
+}
+
+/**
  * 判断数据是否是 undefined, null, NaN 之一
  */
 export const isInvalid = (value) => [undefined, null, NaN].includes(value)
@@ -55,19 +123,6 @@ export const isVoid = (value) => [undefined, null, NaN, ''].includes(value)
  */
 export const isLikeFalse = (value) =>
 	[undefined, null, NaN, false, '', 0].includes(value)
-
-/**
- * 判断是否类数字
- * 类数字：123、"123"
- * 不合法：NaN、Boolean、以及其他
- */
-export const isLikeNumber = (value) => {
-	if (isNotInTypes(value, ['String', 'Number'])) return false
-	if (value === '') return false
-	let value_ = Number(value)
-	if (Number.isNaN(value_)) return false
-	return true
-}
 
 /**
  * 判断数据的类型是否相同
@@ -85,7 +140,7 @@ export const checkTypeOrError = (value, expectedType) => {
 }
 
 /**
- * 判断传入数据与多个期望类型是否一致，若不一致，抛出异常
+ * 判断传入数据是期望类型之一，若不是，抛出异常
  */
 export const checkTypesOrError = (value, expectedTypes) => {
 	checkTypeOrError(expectedTypes, 'Array')

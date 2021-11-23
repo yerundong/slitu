@@ -1,5 +1,5 @@
-import { checkTypeOrError, isVoid } from './type'
-import { isPlainObject, cloneDeep } from 'lodash'
+import { checkTypeOrError, isVoid, isObj } from './type'
+import { cloneDeep } from 'lodash'
 
 /**
  * 移除对象无效属性
@@ -22,7 +22,7 @@ export const removeInvalidPropDeep = (obj) => {
 	checkTypeOrError(obj, 'Object')
 	const obj_ = cloneDeep(obj)
 	Object.keys(obj_).forEach((key) => {
-		if (isPlainObject(obj_[key])) {
+		if (isObj(obj_[key])) {
 			obj_[key] = removeInvalidPropDeep(obj_[key])
 		} else {
 			isVoid(obj_[key]) && delete obj_[key]
