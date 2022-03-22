@@ -1,5 +1,5 @@
 import { isLikeNum, getType, checkTypeOrError } from './type'
-import Decimal from 'decimal.js'
+import Decimal from 'decimal.js' 
 
 /**
  * 数学运算
