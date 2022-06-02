@@ -73,3 +73,49 @@ export const rgbColorToHexColor = (rgbColor) => {
     hexColor: "#" + colors.join(""),
   };
 };
+
+/**
+ * 数组转Map
+ */
+export const arrayToMap = (
+  list = [],
+  handle = (item) => ({ key: item.label, value: item.value })
+) => {
+  checkTypeOrError(list, "Array");
+  checkTypeOrError(handle, "Function");
+  const map = new Map();
+  for (let i = 0, item; (item = list[i]); i++) {
+    const { key, value } = handle(item);
+    map.set(key, value);
+  }
+  return map;
+};
+
+/**
+ * Map转数组
+ */
+export const mapToArray = (
+  map = new Map(),
+  handle = (value, label) => ({ label, value })
+) => {
+  checkTypeOrError(map, "Map");
+  checkTypeOrError(handle, "Function");
+  const list = [];
+  map.forEach((value, key) => {
+    const item = handle(value, key);
+    list.push(item);
+  });
+  return list;
+};
+
+/**
+ * Map转Object
+ */
+export const mapToObject = (map = new Map()) => {
+  checkTypeOrError(map, "Map");
+  const obj = {};
+  map.forEach((value, key) => {
+    obj[key] = value;
+  });
+  return obj;
+};

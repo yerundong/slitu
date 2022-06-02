@@ -1,40 +1,40 @@
-import { checkTypeOrError } from './type'
+import {
+  checkTypeOrError,
+  isInTypes,
+  isNil,
+  isInvalid,
+  isVoid,
+  isLikeFalse,
+} from "./type";
 
 /**
  * 判断值，值替换
  */
-export const displace = (value, replacement, replaceRange = []) => {
-	checkTypeOrError(replaceRange, 'Array')
-	return replaceRange.includes(value) ? replacement : value
-}
+export const displace = (value, replacement, valueRange = []) => {
+  checkTypeOrError(valueRange, "Array");
+  return valueRange.includes(value) ? replacement : value;
+};
 
 /**
  * 判断类型，值替换
  */
-export const displaceByType = (value, replacement, replaceRange = []) => {
-	
-}
+export const displaceByType = (value, replacement, typeRange = []) => {
+  checkTypeOrError(typeRange, "Array");
+  return isInTypes(value, typeRange) ? replacement : value;
+};
 
 /**
  * 常用无效值替换
  */
 export const displaceNil = (value, replacement) => {
-	return displace(value, replacement, [undefined, null])
-}
+  return isNil(value) ? replacement : value;
+};
 export const displaceInvalid = (value, replacement) => {
-	return displace(value, replacement, [NaN, undefined, null])
-}
+  return isInvalid(value) ? replacement : value;
+};
 export const displaceVoid = (value, replacement) => {
-	return displace(value, replacement, [NaN, undefined, null, ''])
-}
-
-/**
- * 值映射
- */
-export const valueMap = (value, list = []) => {
-	checkTypeOrError(list, 'Array')
-	for (let i = 0, item; item = list[i]; i++) {
-		if(item.value === value)
-			return item.name
-	}
-}
+  return isVoid(value) ? replacement : value;
+};
+export const displaceLikeFalse = (value, replacement) => {
+  return isLikeFalse(value) ? replacement : value;
+};
