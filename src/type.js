@@ -78,6 +78,12 @@ export const isObj = (value) => {
   return getType(value) === "Object";
 };
 /**
+ * 是否 Function 类型
+ */
+export const isFunc = (value) => {
+  return getType(value) === "Function";
+};
+/**
  * 是否 null 类型
  */
 export const isNul = (value) => {
