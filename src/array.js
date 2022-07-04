@@ -1,4 +1,4 @@
-import { checkTypeOrError } from "./type";
+import { checkTypeOrError, checkTypesOrError } from "./type";
 
 /**
  * 判断两个数组是否元素相同，无关顺序
@@ -15,11 +15,52 @@ export const arraysEqualIgnoreOrder = (array1, array2) => {
 /**
  * json获取特定值
  * 适用于[{...}, {...}, ...]格式的json
+ * 如json = [{id: 1}, {id: 2}, {id: 3}]，jsonGetValue(json, 'id', 2)，返回{id: 2}
  */
-export const jsonGetValue = (list, key, value) => {
-  checkTypeOrError(list, "Array");
-  for (let i = 0, item; (item = list[i]); i++) {
+export const jsonGetValue = (array, key, value) => {
+  checkTypeOrError(array, "Array");
+  for (let i = 0, item; (item = array[i]); i++) {
     if (item[key] === value) return item;
   }
   return null;
+};
+
+/**
+ * 给树型结构的数组增加路径记录的属性
+ * @param {Object} tree 树型数组
+ * @param {Object} options
+ * * @property {String} initPath 初始路径 默认：''
+ * * @property {String} childrenName 树子节点名称 默认：children
+ * * @property {String} pathName 所添加路径记录的属性名 默认：path
+ * * @property {Boolean} parentPath 是否添加父路径记录 默认：true
+ * * @property {String} parentPathName 所添加父路径记录的属性名 默认：parentPath
+ */
+export const recursiveAttachTreePath = (tree, options = {}) => {
+  checkTypeOrError(tree, "Array");
+  checkTypeOrError(options, "Object");
+  const defOptions = {
+    initPath: "",
+    childrenName: "children",
+    pathName: "path",
+    parentPath: true,
+    parentPathName: "parentPath",
+  };
+
+  const options_ = Object.assign({}, defOptions, options);
+  const { initPath, childrenName, pathName, parentPath, parentPathName } =
+    options_;
+  for (let i = 0; i < tree.length; i++) {
+    let item = tree[i];
+    const path = `${initPath}[${i}]`;
+    item[pathName] = path;
+    if (parentPath) {
+      item[parentPathName] = initPath;
+    }
+    if (item?.[childrenName]?.length > 0) {
+      options_.initPath = `${path}.${childrenName}`;
+      recursiveAttachTreePath(item[childrenName], options_);
+    }
+  }
+
+  return tree;
 };

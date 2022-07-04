@@ -24,7 +24,7 @@ import { cloneDeep, eq } from "lodash";
 export const removeInvalidProp = (obj, options = {}) => {
   checkTypeOrError(obj, "Object");
   checkTypeOrError(options, "Object");
-  const op_def = {
+  const defOptions = {
     deepClone: false,
     recursion: false,
     filterFunction: null,
@@ -32,7 +32,7 @@ export const removeInvalidProp = (obj, options = {}) => {
     filterValue: options.filterValue + "_unq",
     filterType: "void",
   };
-  const options_ = Object.assign({}, op_def, options);
+  const options_ = Object.assign({}, defOptions, options);
   const {
     deepClone,
     recursion,
