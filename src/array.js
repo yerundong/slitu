@@ -13,19 +13,6 @@ export const arraysEqualIgnoreOrder = (array1, array2) => {
 };
 
 /**
- * json获取特定值
- * 适用于[{...}, {...}, ...]格式的json
- * 如json = [{id: 1}, {id: 2}, {id: 3}]，jsonGetValue(json, 'id', 2)，返回{id: 2}
- */
-export const jsonGetValue = (array, key, value) => {
-  checkTypeOrError(array, "Array");
-  for (let i = 0, item; (item = array[i]); i++) {
-    if (item[key] === value) return item;
-  }
-  return null;
-};
-
-/**
  * 给树型结构的数组增加路径记录的属性
  * @param {Object} tree 树型数组
  * @param {Object} options
