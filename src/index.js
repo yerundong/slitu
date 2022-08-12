@@ -6,4 +6,5 @@ export * from "./process";
 export * from "./browser";
 export * from "./turn";
 export * from "./crypto";
+export * from "./function";
 export { default as Timer } from "./Timer";
