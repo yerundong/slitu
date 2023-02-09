@@ -127,18 +127,19 @@ export const isTypeEqual = (value1, value2) =>
  * 判断传入数据与期望类型是否一致，若不一致，抛出异常
  */
 export const checkTypeOrError = (value, expectedType) => {
-  const gotType = getType(value);
-  if (gotType !== expectedType)
-    throw new Error(`Expected ${expectedType}, got ${gotType}`);
-};
-/**
- * 判断传入数据是期望类型之一，若不是，抛出异常
- */
-export const checkTypesOrError = (value, expectedTypes) => {
-  checkTypeOrError(expectedTypes, "Array");
-  if (isNotInTypes(value, expectedTypes)) {
-    throw new Error(
-      `Expected ${expectedTypes.toString()}, got ${getType(value)}`
-    );
+  const gotExpType = getType(expectedType);
+  if (!["String", "Array"].includes(gotExpType)) {
+    throw new Error(`expectedType expected String, Array, got ${gotExpType}.`);
+  }
+
+  const valueType = getType(value);
+  if (gotExpType === "String") {
+    if (valueType !== expectedType)
+      throw new Error(`Expected ${expectedType}, got ${valueType}.`);
+    return;
+  } else {
+    if (!expectedType.length) return;
+    if (!expectedType.includes(valueType))
+      throw new Error(`Expected ${expectedType}, got ${valueType}.`);
   }
 };

@@ -1,4 +1,4 @@
-import { checkTypeOrError, checkTypesOrError } from "./type";
+import { checkTypeOrError } from "./type";
 
 /**
  * 判断两个数组是否元素相同，无关顺序
