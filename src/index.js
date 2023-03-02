@@ -8,3 +8,4 @@ export * from "./crypto";
 export * from "./function";
 export * from "./string";
 export { default as Timer } from "./Timer";
+export { default as Version } from "./Version";
