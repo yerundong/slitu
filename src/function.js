@@ -5,6 +5,8 @@ import {
   isInvalid,
   isVoid,
   isLikeFalse,
+  isTypeEqual,
+  isUndef,
 } from "./type";
 
 /**
@@ -49,4 +51,24 @@ export const displaceVoid = (value, replacement) => {
 };
 export const displaceLikeFalse = (value, replacement) => {
   return isLikeFalse(value) ? replacement : value;
+};
+
+/**
+ * 安全的JSON.parse
+ */
+export const safeJsonParse = (value, defValue) => {
+  let reVal;
+  try {
+    reVal = JSON.parse(value);
+  } catch {}
+
+  if (isUndef(defValue)) {
+    return reVal;
+  } else {
+    if (!isTypeEqual(reVal, defValue)) {
+      return defValue;
+    } else {
+      return reVal;
+    }
+  }
 };
