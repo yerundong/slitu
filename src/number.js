@@ -58,3 +58,14 @@ export const completeIntDigit = (value, figture = 2) => {
     return `${symbol}${"0".repeat(diffFig)}${value_abs}`;
   }
 };
+
+/**
+ * 判断数字是否相等
+ * @param {Any} value1
+ * @param {Any} value2
+ * @returns {Boolean}
+ */
+export const numEq = (value1, value2) => {
+  if (!isLikeNum(value1) || !isLikeNum(value2)) return false;
+  return value1 * 1 === value2 * 1;
+};
