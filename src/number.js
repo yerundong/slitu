@@ -61,6 +61,7 @@ export const completeIntDigit = (value, figture = 2) => {
 
 /**
  * 判断数字是否相等
+ * 1===1, 1==='1'的情况都为true
  * @param {Any} value1
  * @param {Any} value2
  * @returns {Boolean}
