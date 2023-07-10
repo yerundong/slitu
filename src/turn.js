@@ -1,4 +1,5 @@
-import { checkTypeOrError, isArr, isStr } from "./type";
+import { checkTypeOrError, isArr, isStr, isFunc } from "./type";
+import { cloneDeep } from "lodash";
 
 /**
  * object 转 formData
@@ -122,7 +123,12 @@ export const mapToObject = (map = new Map()) => {
 /**
  * 前端常用枚举数据结构转换
  * @param {Array} list json数据，格式为：[{name: 'ABC', value: '11001'}]
- * @param {Object|Array} options 配置项
+ * @param {Object|Array} options 配置项|多个配置项
+ * @property {String} name 返回的变量名称
+ * @property {String} type 返回的变量类型，可选值为：Object、Array、Map
+ * @property {String} key 属性名，当type为Object/Map时方传
+ * @property {String|Array|Undefined} value 属性值|属性|全部属性
+ * @property {Function} filter 过滤函数
  */
 export const getCommonEnumData = (list, options) => {
   checkTypeOrError(list, "Array");
@@ -132,38 +138,40 @@ export const getCommonEnumData = (list, options) => {
   }
   const constantBox = {};
   options.forEach((optionsItem) => {
-    const { name, type, key, value, element } = optionsItem;
-    let constant;
+    const list_ = cloneDeep(list);
+    const { name, type, key, value, filter } = optionsItem;
+    let constant, valueOfValue;
     if (type === "Object") {
       constant = {};
     } else if (type === "Array") {
       constant = [];
+    } else if (type === "Map") {
+      constant = new Map();
     }
 
-    list.forEach((item) => {
-      if (type === "Object") {
-        if (isStr(value)) {
-          const valueOfKey = item[key];
-          const valueOfValue = item[value];
-          constant[valueOfKey] = valueOfValue;
-        } else if (isArr(value)) {
-          const valueOfKey = item[key];
-          const arr = [];
-          const obj = {};
-          value.forEach((keyEle) => {
-            obj[keyEle] = item[keyEle];
-          });
-          arr.push(obj);
-          constant[valueOfKey] = arr;
-        }
-      } else if (type === "Array") {
-        const obj = {};
-        element?.forEach((keyEle) => {
-          obj[keyEle] = item[keyEle];
-        });
-        constant.push(obj);
+    for (let i = 0, item; (item = list_[i]); i++) {
+      if (isFunc(filter) && !filter(item)) {
+        continue;
       }
-    });
+      if (isStr(value)) {
+        valueOfValue = item[value];
+      } else if (isArr(value)) {
+        valueOfValue = {};
+        value?.forEach((valEle) => {
+          valueOfValue[valEle] = item[valEle];
+        });
+      } else {
+        valueOfValue = item;
+      }
+
+      if (type === "Object") {
+        constant[item[key]] = valueOfValue;
+      } else if (type === "Array") {
+        constant.push(valueOfValue);
+      } else if (type === "Map") {
+        constant.set(item[key], valueOfValue);
+      }
+    }
     constantBox[name] = constant;
   });
   return constantBox;
