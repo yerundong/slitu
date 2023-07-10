@@ -1,4 +1,4 @@
-import { checkTypeOrError } from "./type";
+import { checkTypeOrError, isArr, isStr } from "./type";
 
 /**
  * object 转 formData
@@ -118,4 +118,53 @@ export const mapToObject = (map = new Map()) => {
     obj[key] = value;
   });
   return obj;
+};
+/**
+ * 前端常用枚举数据结构转换
+ * @param {Array} list json数据，格式为：[{name: 'ABC', value: '11001'}]
+ * @param {Object|Array} options 配置项
+ */
+export const getCommonEnumData = (list, options) => {
+  checkTypeOrError(list, "Array");
+  checkTypeOrError(options, ["Object", "Array"]);
+  if (!isArr(options)) {
+    options = [options];
+  }
+  const constantBox = {};
+  options.forEach((optionsItem) => {
+    const { name, type, key, value, element } = optionsItem;
+    let constant;
+    if (type === "Object") {
+      constant = {};
+    } else if (type === "Array") {
+      constant = [];
+    }
+
+    list.forEach((item) => {
+      if (type === "Object") {
+        if (isStr(value)) {
+          const valueOfKey = item[key];
+          const valueOfValue = item[value];
+          constant[valueOfKey] = valueOfValue;
+        } else if (isArr(value)) {
+          const valueOfKey = item[key];
+          const arr = [];
+          const obj = {};
+          value.forEach((keyEle) => {
+            obj[keyEle] = item[keyEle];
+          });
+          arr.push(obj);
+          constant[valueOfKey] = arr;
+        }
+      } else if (type === "Array") {
+        const obj = {};
+        element?.forEach((keyEle) => {
+          obj[keyEle] = item[keyEle];
+        });
+        constant.push(obj);
+      }
+    });
+    constantBox[name] = constant;
+  });
+  return constantBox;
 };
