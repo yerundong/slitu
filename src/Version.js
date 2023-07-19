@@ -1,6 +1,7 @@
 import { checkTypeOrError, isStr, isNum, isLikeNum } from "./type";
 import { gt, lt } from "./number";
-import { cloneDeep } from "lodash";
+import cloneDeep from "lodash/cloneDeep";
+
 /**
  * @description 版本号处理
  */

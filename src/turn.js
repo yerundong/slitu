@@ -1,5 +1,5 @@
 import { checkTypeOrError, isArr, isStr, isFunc } from "./type";
-import { cloneDeep } from "lodash";
+import cloneDeep from "lodash/cloneDeep";
 
 /**
  * object 转 formData

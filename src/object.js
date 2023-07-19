@@ -8,7 +8,8 @@ import {
   isVoid,
   isObj,
 } from "./type";
-import { cloneDeep, eq } from "lodash";
+import cloneDeep from "lodash/cloneDeep";
+import eq from "lodash/eq";
 
 /**
  * 移除对象无效属性
