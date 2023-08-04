@@ -26,11 +26,13 @@ export const formDataToObject = (fd) => {
 };
 
 /**
- * 16进制颜色值转rgb颜色值
+ * 16进制颜色值转rgb、rgba颜色值
  * @param {String} hexColor
+ * @param {string|number} alpha 透明度
  */
-export const hexColorToRgbColor = (hexColor) => {
+export const hexColorToRgbColor = (hexColor, alpha = 1) => {
   checkTypeOrError(hexColor, "String");
+  checkTypeOrError(alpha, ["String", "Number"]);
   hexColor = hexColor.charAt(0) === "#" ? hexColor.substring(1) : hexColor;
   if (hexColor.length !== 6 && hexColor.length !== 3)
     return console.error("请传入合法的16进制的颜色值！");
@@ -44,14 +46,14 @@ export const hexColorToRgbColor = (hexColor) => {
   }
   return {
     rgb: colors,
-    rgba: colors.concat([1]),
-    rgbColor: "rgb(" + colors.join() + ")",
-    rgbaColor: "rgba(" + colors.join() + ",1)",
+    rgba: colors.concat(alpha),
+    rgbColor: `rgb(${colors.join()})`,
+    rgbaColor: `rgba(${colors.join()},${alpha})`,
   };
 };
 
 /**
- * rgb颜色值转16进制颜色值
+ * rgb、rgba颜色值转16进制颜色值
  * @param {String} rgbColor
  */
 export const rgbColorToHexColor = (rgbColor) => {

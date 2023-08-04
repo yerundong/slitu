@@ -54,19 +54,21 @@ export const displaceLikeFalse = (value, replacement) => {
 };
 
 /**
- * 安全的JSON.parse
+ ** @description 安全的JSON.parse
+ ** @param {any} value 需要处理的数据
+ ** @param {any} defRetValue JSON.parse执行报错时，或者JSON.parse执行后的数据类型与defRetValue类型不一致，则返回defRetValue
  */
-export const safeJsonParse = (value, defValue) => {
+export const safeJsonParse = (value, defRetValue) => {
   let reVal;
   try {
     reVal = JSON.parse(value);
   } catch {}
 
-  if (isUndef(defValue)) {
+  if (isUndef(defRetValue)) {
     return reVal;
   } else {
-    if (!isTypeEqual(reVal, defValue)) {
-      return defValue;
+    if (!isTypeEqual(reVal, defRetValue)) {
+      return defRetValue;
     } else {
       return reVal;
     }
