@@ -1,7 +1,10 @@
 /**
- * 获取数据类型
- * 注意：此处将 NaN 作为一个单独的类型，标识为'NaN'，而非'Number'，以下设计类型的均是如此，不再标注
+ * 数据类型处理
+ * 共有类型：Object、Function、Array、String、Map、WeakMap、Set、WeakSet、Symbol、Number、Undefined、NaN、Null
+ * 注意：
+ *  1.此处将 NaN 作为一个单独的类型，标识为'NaN'，而非'Number'，其他涉及到类型的均是如此，不再标注
  */
+
 export const getType = (value) => {
   const type = Object.prototype.toString.call(value).slice(8, -1);
   if (Number.isNaN(value)) return "NaN";
@@ -11,23 +14,18 @@ export const getType = (value) => {
  * 判断数据是引用类型还是基本类型
  */
 export const getTypeOf = (value) =>
-  isInTypes(value, [
-    "Number",
-    "String",
-    "Boolean",
-    "Undefined",
-    "Null",
-    "NaN",
-    "Symbol",
-  ])
-    ? "basic"
-    : "refer";
+  ["object", "function"].includes(typeof value) ? "refer" : "basic";
+
 /**
  * 判断数据是否是类型之一
+ * 支持LikeNumber类型判断
  */
 export const isInTypes = (value, type_array = []) => {
   checkTypeOrError(type_array, "Array");
-  return type_array.includes(getType(value));
+  return (
+    type_array.includes(getType(value)) ||
+    (isLikeNum(value) && type_array.includes("LikeNumber"))
+  );
 };
 /**
  * 判断数据是否不是类型之一
@@ -44,7 +42,7 @@ export const isNum = (value) => {
 };
 /**
  * 判断是否类数字(LikeNumber)
- * 类数字：123、"123"
+ * 类数字类型：123、"123"
  */
 export const isLikeNum = (value) => {
   if (isNotInTypes(value, ["String", "Number"])) return false;
@@ -125,6 +123,9 @@ export const isTypeEqual = (value1, value2) =>
   getType(value1) === getType(value2);
 /**
  * 判断传入数据与期望类型是否一致，若不一致，抛出异常
+ * 注意：
+ *  1.expectedType支持字符串、数组格式
+ *  2.expectedType支持LikeNumber类型
  */
 export const checkTypeOrError = (value, expectedType) => {
   const gotExpType = getType(expectedType);
@@ -133,13 +134,15 @@ export const checkTypeOrError = (value, expectedType) => {
   }
 
   const valueType = getType(value);
+  let extp;
   if (gotExpType === "String") {
-    if (valueType !== expectedType)
-      throw new Error(`Expected ${expectedType}, got ${valueType}.`);
-    return;
-  } else {
-    if (!expectedType.length) return;
-    if (!expectedType.includes(valueType))
-      throw new Error(`Expected ${expectedType}, got ${valueType}.`);
+    extp = [expectedType];
+  } else if (gotExpType === "Array") {
+    extp = expectedType;
   }
+  const match =
+    extp.includes(valueType) ||
+    (isLikeNum(value) && extp.includes("LikeNumber"));
+
+  if (!match) throw new Error(`Expected ${expectedType}, got ${valueType}.`);
 };
