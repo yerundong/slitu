@@ -3,6 +3,7 @@
  * 共有类型：Object、Function、Array、String、Map、WeakMap、Set、WeakSet、Symbol、Number、Undefined、NaN、Null
  * 注意：
  *  1.此处将 NaN 作为一个单独的类型，标识为'NaN'，而非'Number'，其他涉及到类型的均是如此，不再标注
+ *  2.新增一种子类型：LikeNumber，代表'123.45'、123这种类数字类型，
  */
 
 export const getType = (value) => {
@@ -45,7 +46,7 @@ export const isNum = (value) => {
  * 类数字类型：123、"123"
  */
 export const isLikeNum = (value) => {
-  if (isNotInTypes(value, ["String", "Number"])) return false;
+  if (!isNum(value) && !isStr(value)) return false;
   if (value === "") return false;
   let value_ = Number(value);
   if (Number.isNaN(value_)) return false;

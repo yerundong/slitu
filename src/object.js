@@ -19,7 +19,6 @@ import eq from "lodash/eq";
  * * @property {Boolean} recursion 是否递归 默认：false
  * * @property {Function} filterFunction 过滤函数
  * * @property {Array} filterValues 过滤值
- * * @property {*} filterValues 过滤值
  * * @property {String} filterType 过滤类型 默认："void"
  */
 export const removeInvalidProp = (obj, options = {}) => {

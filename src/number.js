@@ -26,7 +26,7 @@ export const toDP = (value, dp, rm) =>
 
 /**
  * 获取数字整数位的位数
- * @param {Number, LikeNumber} value
+ * @param {LikeNumber} value
  * @returns {String}
  */
 export const getIntFigure = (value) => {
@@ -38,7 +38,7 @@ export const getIntFigure = (value) => {
 
 /**
  * 补足整数数位
- * @param {Number, LikeNumber} value
+ * @param {LikeNumber} value
  * @param {Number} figture 位数
  * @returns {String}
  */
