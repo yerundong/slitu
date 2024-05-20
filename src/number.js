@@ -14,6 +14,7 @@ export const gt = (x, y) => new Decimal(x).gt(y); // x > y
 export const lt = (x, y) => new Decimal(x).lt(y); // x < y
 export const gte = (x, y) => new Decimal(x).gte(y); // x >= y
 export const lte = (x, y) => new Decimal(x).lte(y); // x <= y
+export const pow = (x, y) => Decimal.pow(x, y).valueOf(); // x^y
 
 /**
  * 小数取舍处理
