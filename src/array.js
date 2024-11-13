@@ -51,3 +51,17 @@ export const recursiveAttachTreePath = (tree, options = {}) => {
 
   return tree;
 };
+
+/**
+ * 根据数组项的 key 和 value，获取目标数组项，适用于[{a: 1, b: 2}, {...}, ...]格式的数组
+ * @param {Object} array 数组
+ * @param {String} key
+ * @param {Any} value
+ */
+export const getArrayItemBy = (array, key, value) => {
+  checkTypeOrError(array, "Array");
+  checkTypeOrError(key, "String");
+  for (let i = 0, item; (item = array[i]); i++) {
+    if (item?.[key] === value) return item;
+  }
+};

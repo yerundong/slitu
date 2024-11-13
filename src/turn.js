@@ -72,7 +72,7 @@ export const mapToObject = (map = new Map()) => {
 };
 /**
  * 前端常用枚举数据结构转换
- * @param {Array} list json数据，格式为：[{name: 'ABC', value: '11001'}]
+ * @param {Array} list json数据，格式为：[{name: 'ABC', value: '11001', ...}, ...]
  * @param {Object|Array} options 配置项|多个配置项
  * @property {String} name 返回的变量名称
  * @property {String} type 返回的变量类型，可选值为：Object、Array、Map
