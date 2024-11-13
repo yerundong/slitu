@@ -128,10 +128,12 @@ export const isTypeEqual = (value1, value2) =>
  *  1.expectedType支持字符串、数组格式
  *  2.expectedType支持LikeNumber类型
  */
-export const checkTypeOrError = (value, expectedType) => {
+export const checkTypeOrError = (value, expectedType, errorTip) => {
   const gotExpType = getType(expectedType);
   if (!["String", "Array"].includes(gotExpType)) {
-    throw new Error(`expectedType expected String, Array, got ${gotExpType}.`);
+    throw new Error(
+      `[Invalid params]: type check failed for params, expectedType expected String|Array, got ${gotExpType}.`
+    );
   }
 
   const valueType = getType(value);
@@ -145,5 +147,10 @@ export const checkTypeOrError = (value, expectedType) => {
     extp.includes(valueType) ||
     (isLikeNum(value) && extp.includes("LikeNumber"));
 
-  if (!match) throw new Error(`Expected ${expectedType}, got ${valueType}.`);
+  if (!match) {
+    const errTip = isStr(errorTip)
+      ? errorTip
+      : `[Invalid params]: type check failed for params, Expected ${expectedType}, got ${valueType}.`;
+    throw new Error(errTip);
+  }
 };
