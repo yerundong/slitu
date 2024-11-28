@@ -113,10 +113,11 @@ export const isInvalid = (value) => [undefined, null, NaN].includes(value);
  */
 export const isVoid = (value) => [undefined, null, NaN, ""].includes(value);
 /**
- * 判断数据是否是假植，包括：undefined, null, NaN, false, '', 0
+ * 判断数据是否是类假值，包括：undefined, null, NaN, false, '', <=0
  */
 export const isLikeFalse = (value) =>
-  [undefined, null, NaN, false, "", 0].includes(value);
+  [undefined, null, NaN, false, ""].includes(value) ||
+  (isNum(value) && value <= 0);
 /**
  * 判断数据的类型是否相同
  */

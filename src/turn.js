@@ -100,7 +100,7 @@ export const getCommonEnumData = (list, options) => {
     }
 
     for (let i = 0, item; (item = list_[i]); i++) {
-      if (isFunc(filter) && !filter(item)) {
+      if (isFunc(filter) && !filter(item, i)) {
         continue;
       }
       if (isStr(value)) {
