@@ -31,10 +31,13 @@ export const displace = (value, replacement, valueRange = []) => {
 
 /**
  * 判断值类型为目标类型之一，若是，则返回替换值
+ * 注意：
+ *  1.expType支持字符串、数组格式
+ *  2.expType支持组合类型
  */
-export const displaceByType = (value, replacement, typeRange = []) => {
-  checkTypeOrError(typeRange, "Array");
-  return isInTypes(value, typeRange) ? replacement : value;
+export const displaceByType = (value, replacement, expType) => {
+  checkTypeOrError(expType, ["String", "Array"]);
+  return isInTypes(value, expType) ? replacement : value;
 };
 
 /**

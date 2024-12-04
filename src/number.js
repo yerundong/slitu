@@ -1,4 +1,4 @@
-import { isLikeNum, getType, checkTypeOrError } from "./type";
+import { isLikeNum, checkTypeOrError } from "./type";
 import Decimal from "decimal.js";
 
 /**
@@ -22,6 +22,7 @@ export const pow = (x, y) => Decimal.pow(x, y).valueOf(); // x^y
 
 export const toFixed = (value, dp, rm) =>
   new Decimal(value).toFixed(dp, rm).valueOf();
+
 export const toDP = (value, dp, rm) =>
   new Decimal(value).toDP(dp, rm).valueOf();
 
@@ -31,8 +32,7 @@ export const toDP = (value, dp, rm) =>
  * @returns {String}
  */
 export const getIntFigure = (value) => {
-  if (!isLikeNum(value))
-    throw new Error(`Expected Number or LikeNumber, got ${getType(value)}`);
+  checkTypeOrError(value, "LikeNumber");
   const value_num = Number(value);
   return parseInt(Math.abs(value_num)).toString().length;
 };
@@ -44,8 +44,7 @@ export const getIntFigure = (value) => {
  * @returns {String}
  */
 export const completeIntDigit = (value, figture = 2) => {
-  if (!isLikeNum(value))
-    throw new Error(`Expected Number or LikeNumber, got ${getType(value)}`);
+  checkTypeOrError(value, "LikeNumber");
   checkTypeOrError(figture, "Number");
   if (figture < 1) figture = 1;
   const value_num = Number(value);

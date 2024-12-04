@@ -1,7 +1,8 @@
 import { checkTypeOrError, getTypeOf } from "./type";
 
 /**
- * 通过 object 数据生成 URL 查询字符串: "a=1&b=2&c=3"
+ * 通过目标对象生成 URL 查询字符串: "a=1&b=2&c=3"
+ * @param {Object} objValue 目标对象
  * @param {Boolean} encode 是否对每个参数进行编码
  * @param {Boolean} withPrefix 是否带?符号
  */
@@ -11,6 +12,8 @@ export const queryStringify = (
   withPrefix = true
 ) => {
   checkTypeOrError(objValue, "Object");
+  checkTypeOrError(encode, "Boolean");
+  checkTypeOrError(withPrefix, "Boolean");
   let str = withPrefix ? "?" : "";
   for (let key in objValue) {
     const value = objValue[key];
