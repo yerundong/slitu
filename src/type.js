@@ -6,7 +6,7 @@
  *  2.此外，还新增了以下几种种组合类型，方便日常判断：
  *    1.LikeNumber, 表示'123.45'、123这种类数字类型，
  *    2.Nil, 表示 undefined, null 之一
- *    3.Invalid, 表示 undefined, null, NaN, '' 之一
+ *    3.Invalid, 表示 undefined, null, NaN 之一
  *    4.Void, 表示 undefined, null, NaN, '' 之一
  *    5.LikeFalse, 表示 undefined, null, NaN, false, '', <=0 之一
  *    6.ValidString, 表示非空字符

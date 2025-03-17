@@ -7,6 +7,8 @@ import {
   isLikeFalse,
   isTypeEqual,
   isUndef,
+  isStr,
+  isArr,
 } from "./type";
 
 /**
@@ -63,9 +65,13 @@ export const displaceLikeFalse = (value, replacement) => {
  */
 export const safeJsonParse = (value, defRetValue) => {
   let reVal;
-  try {
-    reVal = JSON.parse(value);
-  } catch {}
+  if (isInTypes(value, ["Object", "Array"])) {
+    reVal = value;
+  } else {
+    try {
+      reVal = JSON.parse(value);
+    } catch {}
+  }
 
   if (isUndef(defRetValue)) {
     return reVal;

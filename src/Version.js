@@ -45,7 +45,7 @@ class Version {
   }
   /**
    * @description 任意比较符号比较
-   * @param {String} symbol 比较符号，如>、<、>=、lt、gte等
+   * @param {String} symbol 比较符号，如>、<、≥、≤、lt、gte等
    * @param {String|Version} version 版本号，如1.0.0或Version实例
    * @returns {Boolean} 返回比较结果，若实例版本和参数版本在对应符号意义的比较上成立，返回true，否则返回false
    */
