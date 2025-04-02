@@ -5,8 +5,8 @@ import eq from "lodash/eq";
 
 /**
  * 移除对象无效属性
- * @param {Object} obj
- * @param {Object} options
+ * @param {Object} value 目标对象
+ * @param {Object} options 配置
  * * @property {Boolean} deepClone 是否深拷贝 默认：false
  * * @property {Boolean} recursion 是否递归 默认：false
  * * 以下为过滤字段，优先级从高到低
@@ -15,8 +15,8 @@ import eq from "lodash/eq";
  * * @property {Array} filterValues 过滤值数组 默认：null
  * * @property {String | Array} filterType 过滤类型，支持组合类型 默认："Void"
  */
-export const removeInvalidProp = (obj, options = {}) => {
-  checkTypeOrError(obj, "Object");
+export const removeInvalidProp = (value, options = {}) => {
+  checkTypeOrError(value, "Object");
   checkTypeOrError(options, "Object");
 
   const uuidStr = uuid() + new Date().getTime();
@@ -28,8 +28,6 @@ export const removeInvalidProp = (obj, options = {}) => {
     filterValues: null,
     filterType: "Void",
   };
-  const options_ = Object.assign({}, defOptions, options);
-  console.log("options_: ", options_);
   const {
     deepClone,
     recursion,
@@ -37,13 +35,8 @@ export const removeInvalidProp = (obj, options = {}) => {
     filterValues,
     filterValue,
     filterType,
-  } = options_;
-  let obj_;
-  if (deepClone) {
-    obj_ = cloneDeep(obj);
-  } else {
-    obj_ = obj;
-  }
+  } = Object.assign({}, defOptions, options);
+  const obj_ = deepClone ? cloneDeep(value) : value;
   Object.keys(obj_).forEach((key) => {
     if (recursion && isObj(obj_[key])) {
       obj_[key] = removeInvalidProp(obj_[key], options);
@@ -59,4 +52,34 @@ export const removeInvalidProp = (obj, options = {}) => {
     }
   });
   return obj_;
+};
+
+/**
+ * 移除对象额外属性
+ * @param {Object} value 目标对象
+ * @param {Array, Object} props 需要排除/包含的属性名称
+ * @param {Object} options 配置
+ * * @property {Boolean} deepClone 是否深拷贝 默认：false
+ * * @property {String} type 类型：exclude-排除，include-包含，默认：exclude
+ */
+export const removeExtraProp = (value, props = [], options = {}) => {
+  checkTypeOrError(value, "Object");
+  checkTypeOrError(props, ["Array", "Object"]);
+  checkTypeOrError(options, "Object");
+  const defOptions = {
+    deepClone: false,
+    type: "exclude",
+  };
+  const { deepClone, type } = Object.assign({}, defOptions, options);
+  const value_ = deepClone ? cloneDeep(value) : value;
+
+  const keys = isArr(props) ? props : Object.keys(props);
+  for (const key in value_) {
+    const fitDel =
+      type === "include" ? !keys.includes(key) : keys.includes(key);
+    if (fitDel) {
+      delete value_[key];
+    }
+  }
+  return value_;
 };
