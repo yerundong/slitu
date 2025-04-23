@@ -50,7 +50,6 @@ export const parseQueryString = (queryString = "") => {
     return {};
   }
   const arr2 = decodeURIComponent(queryStr).split("&");
-  console.log("arr2: ", arr2);
   const obj = {};
   arr2.forEach((item) => {
     const arr3 = item.split("=");
