@@ -53,7 +53,7 @@ export const recursiveAttachTreePath = (tree, options = {}) => {
 };
 
 /**
- * 根据数组项的 key 和 value，获取目标数组项，适用于[{a: 1, b: 2}, {...}, ...]格式的数组
+ * 根据数组项的 key 和 value，获取目标数组项，适用于[{key: value}]格式的数组
  * @param {Object} array 数组
  * @param {String} key
  * @param {Any} value

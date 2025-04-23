@@ -1,10 +1,10 @@
 import { checkTypeOrError, getTypeOf } from "./type";
 
 /**
- * 通过目标对象生成 URL 查询字符串: "a=1&b=2&c=3"
+ * 通过目标对象生成 URL search数据: "?a=1&b=2&c=3"
  * @param {Object} objValue 目标对象
  * @param {Boolean} encode 是否对每个参数进行编码
- * @param {Boolean} withPrefix 是否带?符号
+ * @param {Boolean} withPrefix 是否带?符号，默认true
  */
 export const queryStringify = (
   objValue = {},
@@ -35,10 +35,11 @@ export const queryStringify = (
 };
 
 /**
- * 解析 URL 查询字符串，生成 object 数据
+ * 解析 URL search数据，生成 object 数据
  */
 export const parseQueryString = (queryString = "") => {
   checkTypeOrError(queryString, "String");
+  if (!queryString) return {};
   const arr1 = queryString.split("?");
   let queryStr;
   if (arr1.length === 1) {
@@ -49,10 +50,18 @@ export const parseQueryString = (queryString = "") => {
     return {};
   }
   const arr2 = decodeURIComponent(queryStr).split("&");
+  console.log("arr2: ", arr2);
   const obj = {};
   arr2.forEach((item) => {
     const arr3 = item.split("=");
     obj[arr3[0]] = arr3[1];
   });
   return obj;
+};
+
+/**
+ * 从浏览器url中解析search数据
+ */
+export const getLocationSearch = () => {
+  return parseQueryString(location.search || "");
 };
