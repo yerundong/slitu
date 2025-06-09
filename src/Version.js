@@ -1,4 +1,4 @@
-import { checkTypeOrError, isStr, isNum, isLikeNum } from "./type";
+import { checkTypeOrError, isLikeNum } from "./type";
 import { gt, lt } from "./number";
 import cloneDeep from "lodash/cloneDeep";
 

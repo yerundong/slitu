@@ -9,3 +9,4 @@ export * from "./string";
 export * from "./convert";
 export { default as Timer } from "./Timer";
 export { default as Version } from "./Version";
+export { default as TripleLinkage } from "./TripleLinkage";

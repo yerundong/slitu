@@ -7,8 +7,6 @@ import {
   isLikeFalse,
   isTypeEqual,
   isUndef,
-  isStr,
-  isArr,
 } from "./type";
 
 /**
