@@ -272,3 +272,21 @@ export const parseBase64 = (base64) => {
 
   return result;
 };
+
+/**
+ * @description 根据url下载
+ * @param {string} url 文件路径
+ * @param {string} fileName 文件名称
+ */
+export const downloadByUrl = (url, fileName = "下载文件") => {
+  // 创建a标签
+  const a = document.createElement("a");
+  // 设置下载链接和文件名
+  a.href = url;
+  a.download = fileName;
+  // 触发点击事件
+  document.body.appendChild(a);
+  a.click();
+  // 移除a标签避免内存泄漏
+  document.body.removeChild(a);
+};
