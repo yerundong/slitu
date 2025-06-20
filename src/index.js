@@ -7,6 +7,7 @@ export * from "./crypto";
 export * from "./function";
 export * from "./string";
 export * from "./convert";
+export * from "./file";
 export { default as Timer } from "./Timer";
 export { default as Version } from "./Version";
 export { default as TripleLinkage } from "./TripleLinkage";
