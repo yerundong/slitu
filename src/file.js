@@ -152,7 +152,7 @@ export const getExtensionByMimeType = (mimeType) => {
 
 /**
  * @description base64数据转成blob
- * @param {string} base64Data base64数据，前缀可带可不带
+ * @param {string} base64Data base64数据(前缀可带可不带)
  * @param {string} contentType 拓展名或mime类型
  * @returns {blob}
  */
@@ -192,7 +192,7 @@ export const base64ToBlob = (base64Data, contentType = "") => {
 
 /**
  * @description base64数据转成blob url
- * @param {string} base64Data base64数据，前缀可带可不带
+ * @param {string} base64Data base64数据(前缀可带可不带)
  * @param {string} contentType 拓展名或mime类型
  * @returns {string}
  */
@@ -202,7 +202,7 @@ export const base64ToBlobUrl = (base64Data, contentType = "") => {
 };
 
 /**
- * @description blob数据转成base64数据
+ * @description blob数据转成base64数据(带前缀)
  * @param {blob} blob blob数据
  * @returns {string}
  */
@@ -216,7 +216,7 @@ export const blobToBase64 = (blob) => {
 };
 
 /**
- * @description blob url转成base64数据
+ * @description blob url转成base64数据(带前缀)
  * @param {string} blobUrl blob url
  * @returns {string}
  */
@@ -225,7 +225,7 @@ export const blobUrlToBase64 = async (blobUrl) => {
     // 通过 fetch API 获取 Blob 对象
     const response = await fetch(blobUrl);
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`fetch blobUrl error! status: ${response.status}`);
     }
 
     const blob = await response.blob();
@@ -239,14 +239,11 @@ export const blobUrlToBase64 = async (blobUrl) => {
     });
   } catch (error) {
     throw error;
-  } finally {
-    // 释放 Blob URL 资源（避免内存泄漏）
-    URL.revokeObjectURL(blobUrl);
   }
 };
 
 /**
- * @description 解析base64获取纯base64数据、mime、拓展名
+ * @description 解析base64数据(带前缀)获取base64数据(不带前缀)、mime、拓展名
  * @param {string} blobUrl blob url
  * @returns {string}
  */
@@ -274,11 +271,11 @@ export const parseBase64 = (base64) => {
 };
 
 /**
- * @description 根据url下载
+ * @description 下载文件
  * @param {string} url 文件路径
  * @param {string} fileName 文件名称
  */
-export const downloadByUrl = (url, fileName = "下载文件") => {
+export const downloadFile = (url, fileName = "下载文件") => {
   // 创建a标签
   const a = document.createElement("a");
   // 设置下载链接和文件名
