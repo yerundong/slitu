@@ -1,13 +1,12 @@
-import { checkTypeOrError, isArr, isStr, isFunc } from "./type";
+import { checkRTAOrError, checkTypeOrError } from "./check";
 import { pow, mul, div } from "./number";
-import cloneDeep from "lodash/cloneDeep";
 
 /**
- * object 转 formData
- * @param {Object} obj
+ * @description object 转 formData
+ * @param {Object} obj 目标对象，必传
  */
 export const objectToFormData = (obj) => {
-  checkTypeOrError(obj, "Object");
+  checkRTAOrError(obj, "obj", true, ["Object"]);
   const fd = new FormData();
   Object.keys(obj).forEach((key) => {
     fd.append(key, obj[key]);
@@ -16,25 +15,27 @@ export const objectToFormData = (obj) => {
 };
 
 /**
- * formData 转 object
- * @param {Object} obj
+ * @description formData 转 object
+ * @param {Object} fd 目标formData，必传
  */
 export const formDataToObject = (fd) => {
-  checkTypeOrError(fd, "FormData");
+  checkRTAOrError(fd, "fd", true, ["FormData"]);
   const obj = {};
   fd.forEach((value, key) => (obj[key] = value));
   return obj;
 };
 
 /**
- * 数组转Map
+ * @description 数组转Map
+ * @param {Array} list 数组
+ * @param {Function} handle 转换处理函数
  */
 export const arrayToMap = (
   list = [],
   handle = (item) => ({ key: item.label, value: item.value })
 ) => {
-  checkTypeOrError(list, "Array");
-  checkTypeOrError(handle, "Function");
+  checkTypeOrError(list, "list", "Array");
+  checkTypeOrError(handle, "handle", "Function");
   const map = new Map();
   for (let i = 0, item; (item = list[i]); i++) {
     const { key, value } = handle(item);
@@ -44,14 +45,16 @@ export const arrayToMap = (
 };
 
 /**
- * Map转数组
+ * @description Map转数组
+ * @param {Map} map
+ * @param {Function} handle 转换处理函数
  */
 export const mapToArray = (
   map = new Map(),
   handle = (value, label) => ({ label, value })
 ) => {
-  checkTypeOrError(map, "Map");
-  checkTypeOrError(handle, "Function");
+  checkTypeOrError(map, "map", "Map");
+  checkTypeOrError(handle, "handle", "Function");
   const list = [];
   map.forEach((value, key) => {
     const item = handle(value, key);
@@ -61,83 +64,27 @@ export const mapToArray = (
 };
 
 /**
- * Map转Object
+ * @description Map转Object
+ * @param {Map} map
  */
 export const mapToObject = (map = new Map()) => {
-  checkTypeOrError(map, "Map");
+  checkTypeOrError(map, "map", "Map");
   const obj = {};
   map.forEach((value, key) => {
     obj[key] = value;
   });
   return obj;
 };
-/**
- * 前端常用枚举数据结构转换
- * @param {Array} list json数据，格式为：[{name: 'ABC', value: '11001', ...}, ...]
- * @param {Object|Array} options 配置项|多个配置项
- * @property {String} name 返回的变量名称
- * @property {String} type 返回的变量类型，可选值为：Object、Array、Map
- * @property {String} key 属性名，当type为Object/Map时方传
- * @property {String|Array|Undefined} value 属性值|属性|全部属性
- * @property {Function} filter 过滤函数
- */
-export const getCommonEnumData = (list, options) => {
-  checkTypeOrError(list, "Array");
-  checkTypeOrError(options, ["Object", "Array"]);
-  if (!isArr(options)) {
-    options = [options];
-  }
-  const constantBox = {};
-  options.forEach((optionsItem) => {
-    const list_ = cloneDeep(list);
-    const { name, type, key, value, filter } = optionsItem;
-    let constant, valueOfValue;
-    if (type === "Object") {
-      constant = {};
-    } else if (type === "Array") {
-      constant = [];
-    } else if (type === "Map") {
-      constant = new Map();
-    }
-
-    for (let i = 0, item; (item = list_[i]); i++) {
-      if (isFunc(filter) && !filter(item, i)) {
-        continue;
-      }
-      if (isStr(value)) {
-        valueOfValue = item[value];
-      } else if (isArr(value)) {
-        valueOfValue = {};
-        value?.forEach((valEle) => {
-          valueOfValue[valEle] = item[valEle];
-        });
-      } else {
-        valueOfValue = item;
-      }
-
-      if (type === "Object") {
-        constant[item[key]] = valueOfValue;
-      } else if (type === "Array") {
-        constant.push(valueOfValue);
-      } else if (type === "Map") {
-        constant.set(item[key], valueOfValue);
-      }
-    }
-    constantBox[name] = constant;
-  });
-  return constantBox;
-};
 
 /**
- * 比特单位之间的转换
- * @param {string} value 需要被转换的值，格式为数字+单位，如'1MB'
- * @param {string} unit 需要转换目标的单位，如'KB'
- * @returns {string} 返回字符串类型的数字，如'1024'
- * @注意 单位支持："B", "KB", "MB", "GB", "TB", "PB", "EB"。
+ * @description 比特单位之间的转换
+ * @param {String} value 需要被转换的值，格式为数字+单位，如'1MB'，必传
+ * @param {String} unit 需要转换目标的单位，如'KB'。单位支持："B", "KB", "MB", "GB", "TB", "PB", "EB"。
+ * @returns {String} 返回字符串类型的数字，如'1024'
  */
 export const byteConvert = (value, unit = "B") => {
-  checkTypeOrError(value, "String");
-  checkTypeOrError(unit, "String");
+  checkRTAOrError(value, "value", true, ["String"]);
+  checkTypeOrError(unit, "unit", "String");
   const value_ = value.toLocaleUpperCase();
   const unit_ = unit.toLocaleUpperCase();
   if (!/^\d+(\.\d+)?[(EB)|(PB)|(TB)|(GB)|(MB)|(KB)|(B)]+$/.test(value_)) {

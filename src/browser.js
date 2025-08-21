@@ -1,16 +1,16 @@
-import { checkTypeOrError } from "./type";
+import { checkTypeOrError } from "./check";
 
 /**
- * 通过 object 数据生成 URL 查询字符串: "?a=1&b=2&c=3"
+ * @description 通过 object 数据生成 URL 查询字符串: "?a=1&b=2&c=3"
  * @param {Object} obj 目标对象
- * @param options 配置
+ * @param {Object} options 配置
  * @property {Boolean} prefix 生成的结果是否带?前缀，默认true
  * @property {Boolean} encode 是否对每个参数的键和值进行编码，默认false
  * @property {Boolean} stringify 是否对每个参数的值进行字符串化，默认false
  */
 export const stringifyQuery = (obj = {}, options = {}) => {
-  checkTypeOrError(obj, "Object");
-  checkTypeOrError(options, "Object");
+  checkTypeOrError(obj, "obj", "Object");
+  checkTypeOrError(options, "options", "Object");
   const defOptions = {
     prefix: true,
     encode: false,
@@ -37,15 +37,15 @@ export const stringifyQuery = (obj = {}, options = {}) => {
 };
 
 /**
- * 解析 URL 查询数据，生成 object 数据
+ * @description 解析 URL 查询数据，生成 object 数据
  * @param {Object} obj URL 查询字符串
- * @param options 配置
+ * @param {Object} options 配置
  * @property {Boolean} encode 是否对每个参数的键和值进行编码，默认false
  * @property {Boolean} stringify 是否对每个参数的值进行逆字符串化，默认false
  */
 export const parseQuery = (queryString = "", options = {}) => {
-  checkTypeOrError(queryString, "String");
-  checkTypeOrError(options, "Object");
+  checkTypeOrError(queryString, "queryString", "String");
+  checkTypeOrError(options, "options", "Object");
   const defOptions = {
     encode: false,
     stringify: false,
@@ -76,14 +76,14 @@ export const parseQuery = (queryString = "", options = {}) => {
 };
 
 /**
- * 从浏览器url中解析查询数据
- * @param options 配置
+ * @description 从浏览器url中解析查询数据
+ * @param {Object} options 配置
  * @property {String} from 原始数据来自：search-从search中解析（默认），hash-从hash解析，all-从search、hash中解析合并（相同字段，search会覆盖hash）
  * @property {Boolean} encode 是否对每个参数的键和值进行编码，默认false
  * @property {Boolean} stringify 是否对每个参数的值进行逆字符串化，默认false
  */
 export const getUrlQuery = (options = {}) => {
-  checkTypeOrError(options, "Object");
+  checkTypeOrError(options, "options", "Object");
   const defOptions = {
     from: "search",
     encode: false,

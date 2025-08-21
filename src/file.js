@@ -1,4 +1,6 @@
-// 拓展名映射到mime的映射（常见的）
+import { checkTypeOrError, checkRTAOrError } from "./check";
+
+// 拓展名映射到mime类型的映射（常见的）
 const extensionToMimeType = {
   // 图片
   jpg: "image/jpeg",
@@ -35,7 +37,7 @@ const extensionToMimeType = {
   rar: "application/x-rar-compressed",
 };
 
-// mime映射到拓展名（常见的）
+// mime类型映射到拓展名（常见的）
 const mimeTypeToExtension = {
   // 图片类型
   "image/jpeg": "jpg",
@@ -131,34 +133,68 @@ const mimeTypeToExtension = {
 };
 
 /**
- * @description 根据拓展名获取mime
- * @param {string} extension 拓展名：png、.png、JPG
- * @returns {string|undefined} mime类型
+ * @description 根据文件名截取拓展名
+ * @param {String} fileName 文件名，必传
+ * @param {String} extCase 大小写，可选值lower|upper|original
+ */
+export const getFileNameExtension = (fileName, extCase = "original") => {
+  checkRTAOrError(fileName, "fileName", true, ["String"]);
+  checkRTAOrError(
+    extCase,
+    "extCase",
+    false,
+    ["String"],
+    [["lower", "upper", "original"]]
+  );
+  const arr = fileName.split(".");
+  const ext = arr[arr.length - 1];
+  if (extCase === "lower") return ext.toLocaleLowerCase();
+  if (extCase === "upper") return ext.toLocaleUpperCase();
+  return ext;
+};
+
+/**
+ * @description 根据拓展名获取mime类型
+ * @param {String} extension 拓展名：png、.png、JPG，不区分大小写，必传
+ * @returns {String} mime类型
  */
 export const getMimeTypeByExtension = (extension) => {
+  checkRTAOrError(extension, "extension", true, ["String"]);
   // 转换为小写并去除开头的点（如果有）
   const ext = extension.toLowerCase().replace(/^\./, "");
-  return extensionToMimeType[ext];
+  // 获取对应的MIME
+  const mime = extensionToMimeType[ext];
+  if (!mime) throw new Error(`Unsupported file extension: ${ext}`);
+  return mime;
 };
 
 /**
  * @description 根据mime类型获取拓展名
- * @param {string} mimeType mime类型：image/png
- * @returns {string|undefined} 拓展名
+ * @param {String} mimeType mime类型：image/png，必传
+ * @returns {string} 拓展名
  */
 export const getExtensionByMimeType = (mimeType) => {
-  return mimeTypeToExtension[mimeType.toLowerCase()];
+  checkRTAOrError(mimeType, "mimeType", true, ["String"]);
+
+  // 获取对应的拓展名
+  const ext = mimeTypeToExtension[mimeType];
+  if (!ext) throw new Error(`Unsupported MIME Type: ${mimeType}`);
+  return ext;
 };
 
 /**
  * @description base64数据转成blob
- * @param {string} base64Data base64数据(前缀可带可不带)
- * @param {string} contentType 拓展名或mime类型
- * @returns {blob}
+ * @param {String} base64 base64数据(前缀可带可不带)，必传
+ * @param {String} contentType 拓展名或mime类型
+ * 最终 MIME 类型优先级：contentType > base64 前缀 > 默认
+ * @returns {Blob}
  */
-export const base64ToBlob = (base64Data, contentType = "") => {
+export const base64ToBlob = (base64, contentType) => {
+  checkRTAOrError(base64, "base64", true, ["String"]);
+  checkTypeOrError(contentType, "contentType", "String");
+
   // 提取 Base64 前缀中的 MIME 类型（如果存在）
-  const matches = base64Data.match(/^data:([^;]+);base64,/);
+  const matches = base64.match(/^data:([^;]+);base64,/);
   const mimeTypeFromPrefix = matches?.[1];
 
   // 处理传入的 contentType 参数
@@ -175,12 +211,11 @@ export const base64ToBlob = (base64Data, contentType = "") => {
     }
   }
 
-  // 最终 MIME 类型优先级：手动传入 > Base64 前缀 > 默认
+  // 最终 MIME 类型优先级：contentType > base64 前缀 > 默认
   return new Blob(
     [
-      Uint8Array.from(
-        atob(base64Data.replace(/^data:[^;]+;base64,/, "")),
-        (c) => c.charCodeAt(0)
+      Uint8Array.from(atob(base64.replace(/^data:[^;]+;base64,/, "")), (c) =>
+        c.charCodeAt(0)
       ),
     ],
     {
@@ -192,21 +227,23 @@ export const base64ToBlob = (base64Data, contentType = "") => {
 
 /**
  * @description base64数据转成blob url
- * @param {string} base64Data base64数据(前缀可带可不带)
- * @param {string} contentType 拓展名或mime类型
- * @returns {string}
+ * @param {String} base64 base64数据(前缀可带可不带)，必传
+ * @param {String} contentType 拓展名或mime类型
+ * 最终 MIME 类型优先级：contentType > base64 前缀 > 默认
+ * @returns {String}
  */
-export const base64ToBlobUrl = (base64Data, contentType = "") => {
-  const blob = base64ToBlob(base64Data, contentType);
+export const base64ToBlobUrl = (base64, contentType) => {
+  const blob = base64ToBlob(base64, contentType);
   return URL.createObjectURL(blob);
 };
 
 /**
  * @description blob数据转成base64数据(带前缀)
- * @param {blob} blob blob数据
- * @returns {string}
+ * @param {Blob} blob blob数据，必传
+ * @returns {String}
  */
 export const blobToBase64 = (blob) => {
+  checkRTAOrError(blob, "blob", true, ["Blob"]);
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onloadend = () => resolve(reader.result);
@@ -217,15 +254,16 @@ export const blobToBase64 = (blob) => {
 
 /**
  * @description blob url转成base64数据(带前缀)
- * @param {string} blobUrl blob url
- * @returns {string}
+ * @param {String} blobUrl blob url，必传
+ * @returns {String}
  */
 export const blobUrlToBase64 = async (blobUrl) => {
+  checkRTAOrError(blobUrl, "blobUrl", true, ["String"]);
   try {
     // 通过 fetch API 获取 Blob 对象
     const response = await fetch(blobUrl);
     if (!response.ok) {
-      throw new Error(`fetch blobUrl error! status: ${response.status}`);
+      throw new Error(`Fetch blobUrl error! status: ${response.status}`);
     }
 
     const blob = await response.blob();
@@ -244,10 +282,11 @@ export const blobUrlToBase64 = async (blobUrl) => {
 
 /**
  * @description 解析base64数据(带前缀)获取base64数据(不带前缀)、mime、拓展名
- * @param {string} blobUrl blob url
- * @returns {string}
+ * @param {String} base64 base64数据(带前缀)，必传
  */
 export const parseBase64 = (base64) => {
+  checkRTAOrError(base64, "base64", true, ["String"]);
+
   // 正则表达式匹配 MIME 类型和 Base64 数据
   const matches = base64.match(/^data:([^;]+);base64,(.*)$/);
 
@@ -262,20 +301,37 @@ export const parseBase64 = (base64) => {
     result.base64 = matches[2];
 
     const ext = getExtensionByMimeType(result.mime);
-    if (ext) {
-      result.extension = ext;
-    }
+    result.extension = ext;
   }
 
   return result;
 };
 
 /**
+ * @description 补全Base64数据的前缀，生成完整的Data URL
+ * @param {String} base64 不带前缀的base64字符串，必传
+ * @param {String} extension 拓展名：png、.png、JPG，不区分大小写，必传
+ */
+export const completeBase64Prefix = (base64, extension) => {
+  checkRTAOrError(base64, "base64", ["String"]);
+  checkRTAOrError(extension, "extension", ["String"]);
+
+  // 获取对应的MIME
+  const mime = getMimeTypeByExtension(extension);
+
+  // 拼接完整的Data URL
+  return `data:${mime};base64,${base64}`;
+};
+
+/**
  * @description 下载文件
- * @param {string} url 文件路径
- * @param {string} fileName 文件名称
+ * @param {String} url 文件路径，必传
+ * @param {String} fileName 文件名称
  */
 export const downloadFile = (url, fileName = "下载文件") => {
+  checkRTAOrError(url, "url", ["String"]);
+  checkTypeOrError(fileName, "fileName", "String");
+
   // 创建a标签
   const a = document.createElement("a");
   // 设置下载链接和文件名

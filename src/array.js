@@ -1,30 +1,34 @@
-import { checkTypeOrError } from "./type";
+import { checkRTAOrError, checkTypeOrError } from "./check";
 
 /**
- * 判断两个数组是否元素相同，无关顺序
+ * @description 判断两个数组是否元素相同，无关顺序
+ * @param {Array} array1 数组1，必传
+ * @param {Array} array2 数组2，必传
  * array1、array2的元素只能是基本类型，若是引用类型则结果判断不准确
  */
 export const arraysEqualIgnoreOrder = (array1, array2) => {
-  checkTypeOrError(array1, "Array");
-  checkTypeOrError(array2, "Array");
+  checkRTAOrError(array1, "array1", true, ["Array"]);
+  checkRTAOrError(array2, "array2", true, ["Array"]);
+
   if (array1 === [] && array2 === []) return true;
   if (array1.length !== array2.length) return false;
   return array1.sort().toString() === array2.sort().toString();
 };
 
 /**
- * 给树型结构的数组增加路径记录的属性
- * @param {Object} tree 树型数组
- * @param {Object} options
- * * @property {String} initPath 初始路径 默认：''
- * * @property {String} childrenName 树子节点名称 默认：children
- * * @property {String} pathName 所添加路径记录的属性名 默认：path
- * * @property {Boolean} parentPath 是否添加父路径记录 默认：true
- * * @property {String} parentPathName 所添加父路径记录的属性名 默认：parentPath
+ * @description 给树型结构的数组增加路径记录的属性
+ * @param {Array} tree 树型数组，必传
+ * @param {Object} options 配置信息
+ * @property {String} initPath 初始路径 默认：''
+ * @property {String} childrenName 树子节点名称 默认：children
+ * @property {String} pathName 所添加路径记录的属性名 默认：path
+ * @property {Boolean} parentPath 是否添加父路径记录 默认：true
+ * @property {String} parentPathName 所添加父路径记录的属性名 默认：parentPath
  */
 export const recursiveAttachTreePath = (tree, options = {}) => {
-  checkTypeOrError(tree, "Array");
-  checkTypeOrError(options, "Object");
+  checkRTAOrError(tree, "tree", true, ["Array"]);
+  checkTypeOrError(options, "options", "Object");
+
   const defOptions = {
     initPath: "",
     childrenName: "children",
@@ -53,14 +57,14 @@ export const recursiveAttachTreePath = (tree, options = {}) => {
 };
 
 /**
- * 根据数组项的 key 和 value，获取目标数组项，适用于[{key: value}]格式的数组
- * @param {Object} array 数组
- * @param {String} key
- * @param {Any} value
+ * @description 根据数组项的 key 和 value，获取目标数组项，适用于[{key: value}]格式的数组
+ * @param {Array} array 数组，必传
+ * @param {String} key 键名，必传
+ * @param {Any} value 键值
  */
 export const getArrayItemBy = (array, key, value) => {
-  checkTypeOrError(array, "Array");
-  checkTypeOrError(key, "String");
+  checkRTAOrError(array, "array", true, ["Array"]);
+  checkRTAOrError(key, "key", true, ["String"]);
   for (let i = 0, item; (item = array[i]); i++) {
     if (item?.[key] === value) return item;
   }

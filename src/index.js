@@ -1,4 +1,5 @@
 export * from "./type";
+export * from "./check";
 export * from "./object";
 export * from "./array";
 export * from "./number";

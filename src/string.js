@@ -1,20 +1,22 @@
-import { checkTypeOrError } from "./type";
+import { checkRTAOrError } from "./check";
 
 /**
- * 字符串去除所有空格
+ * @description 字符串去除所有空格
+ * @param {String} value 目标字符，必传
  */
 export const trims = (value) => {
-  checkTypeOrError(value, "String");
+  checkRTAOrError(value, "value", true, ["String"]);
   return value.replace(/\s/g, "");
 };
 
 /**
- * 字符串超过某个长度剔除，并加上省略号（用于多行省略）
+ * @description 字符串超过某个长度剔除，并加上省略号（用于多行省略）
+ * @param {String} value 目标字符，必传
+ * @param {Number} length 限定长度，必传
  */
 export const strEllipsis = (value, length) => {
-  checkTypeOrError(value, "String");
-  if (value.length <= length) {
-    return value;
-  }
+  checkRTAOrError(value, "value", true, ["String"]);
+  checkRTAOrError(length, "length", true, ["Number"]);
+  if (value.length <= length) return value;
   return value.slice(0, length - 1) + "…";
 };

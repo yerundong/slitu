@@ -1,4 +1,5 @@
-import { checkTypeOrError, isLikeNum } from "./type";
+import { isLikeNum, isStr } from "./type";
+import { checkTypeOrError, checkRTAOrError } from "./check";
 import { gt, lt } from "./number";
 import cloneDeep from "lodash/cloneDeep";
 
@@ -8,10 +9,10 @@ import cloneDeep from "lodash/cloneDeep";
 class Version {
   /**
    * @description 构造器
-   * @param {String} version 版本号，如1.0.0
+   * @param {String} version 版本号，如1.0.0，必传
    */
   constructor(version) {
-    checkTypeOrError(version, "String");
+    checkRTAOrError(version, "version", true, ["String"]);
     let arr = version
       .replace(/[^0-9|\.]/g, "")
       .split(".")
@@ -22,11 +23,12 @@ class Version {
   }
   /**
    * @description 比较方法
-   * @param {String|Version} version 版本号，如1.0.0或Version实例
+   * @param {String|Version} version 版本号，如1.0.0或Version实例，必传
    * @returns {Number} 返回比较结果，若实例版本大于参数版本，返回1；相等，返回0；小于，返回-1
    */
   compare(version) {
-    const targVer = version instanceof Version ? version : new Version(version);
+    checkRTAOrError(version, "version", true, [["String", Version]]);
+    const targVer = isStr(version) ? new Version(version) : version;
     let thisArrayValue = cloneDeep(this.arrayValue);
     const difflen = targVer.arrayValue.length - thisArrayValue.length;
     if (difflen > 0) {
@@ -50,7 +52,7 @@ class Version {
    * @returns {Boolean} 返回比较结果，若实例版本和参数版本在对应符号意义的比较上成立，返回true，否则返回false
    */
   compareWith(symbol, version) {
-    checkTypeOrError(symbol, "String");
+    checkTypeOrError(symbol, "symbol", "String");
     let sym;
     const sarr1 = [">", "<", "=", "≠", "≥", "≤"];
     const sarr2 = ["gt", "lt", "eq", "neq", "gte", "lte"];

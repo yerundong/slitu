@@ -1,33 +1,35 @@
+import { checkRTAOrError } from "./check";
 import { isVoid } from "./type";
 /**
- * 三重联动计算
+ * @description 三重联动计算
  * 例如数量、标准、金额，数量*标准=金额，编辑任意一者，可实时计算其他两者，根据优先级，对应下列k1、k2、k3
  * 规则：
  * 1.一者有值，不计算
  * 2.两者有值，计算无值的那一个
  * 3.三者都有值，计算除当前操作key外，其他两个优先级高的那个
-
  */
 class TripleLinkage {
   /**
-   * @param {object} options 构造配置
-   * @property {array} options.keys 字段名称及优先级， 如：[key1, key2, key3]
-   * @property {function} options.key1 字段key1计算函数
-   * @property {function} options.key2 字段key2计算函数
-   * @property {function} options.key3 字段key3计算函数
+   * @param {Object} options 构造配置，必传
+   * @property {Array} options.keys 字段名称及优先级， 如：[key1, key2, key3]
+   * @property {Function} options.key1 字段key1计算函数
+   * @property {Function} options.key2 字段key2计算函数
+   * @property {Function} options.key3 字段key3计算函数
    */
   constructor(options) {
+    checkRTAOrError(options, "options", true, ["Object"]);
     this.options = options;
   }
 
   /**
-   * @param {object} oprOpt 操作配置
-   * @property {array} options.curKey 当前操作key
-   * @property {string|number} options.key1 key1值
-   * @property {string|number} options.key2 key2值
-   * @property {string|number} options.key3 key3值
+   * @param {Object} oprOpt 操作配置
+   * @property {Array} options.curKey 当前操作key
+   * @property {Any} options.key1 key1值
+   * @property {Any} options.key2 key2值
+   * @property {Any} options.key3 key3值
    */
   opr(oprOpt) {
+    checkRTAOrError(oprOpt, "oprOpt", true, ["Object"]);
     const curKey = oprOpt.curKey;
     const [K1, K2, K3] = this.options.keys;
     const V1 = oprOpt[K1];
