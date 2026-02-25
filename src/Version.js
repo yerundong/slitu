@@ -1,5 +1,5 @@
 import { isLikeNum, isStr } from "./type";
-import { checkTypeOrError, checkRTAOrError } from "./check";
+import { checkRTAOrError } from "./check";
 import { gt, lt } from "./number";
 import cloneDeep from "lodash/cloneDeep";
 
@@ -9,7 +9,7 @@ import cloneDeep from "lodash/cloneDeep";
 class Version {
   /**
    * @description 构造器
-   * @param {String} version 版本号，如1.0.0，必传
+   * @param {string} version 版本号，如1.0.0，必传
    */
   constructor(version) {
     checkRTAOrError(version, "version", true, ["String"]);
@@ -23,8 +23,8 @@ class Version {
   }
   /**
    * @description 比较方法
-   * @param {String|Version} version 版本号，如1.0.0或Version实例，必传
-   * @returns {Number} 返回比较结果，若实例版本大于参数版本，返回1；相等，返回0；小于，返回-1
+   * @param {string|Version} version 版本号，如1.0.0或Version实例，必传
+   * @returns {number} 返回比较结果，若实例版本大于参数版本，返回1；相等，返回0；小于，返回-1
    */
   compare(version) {
     checkRTAOrError(version, "version", true, [["String", Version]]);
@@ -46,10 +46,10 @@ class Version {
     return 0;
   }
   /**
-   * @description 任意比较符号比较
-   * @param {String} symbol 比较符号，如>、<、≥、≤、lt、gte等，必传
-   * @param {String|Version} version 版本号，如1.0.0或Version实例，必传
-   * @returns {Boolean} 返回比较结果，若实例版本和参数版本在对应符号意义的比较上成立，返回true，否则返回false
+   * @description 任意符号比较
+   * @param {string} symbol 比较符号，如>、<、≥、≤、lt、gte等，必传
+   * @param {string|Version} version 版本号，如1.0.0或Version实例，必传
+   * @returns {boolean} 返回比较结果，若实例版本和参数版本在对应符号意义的比较上成立，返回true，否则返回false
    */
   compareWith(symbol, version) {
     checkRTAOrError(symbol, "symbol", true, ["String"]);
@@ -73,8 +73,8 @@ class Version {
   }
   /**
    * @description 大于
-   * @param {String|Version} version 版本号，如1.0.0或Version实例，必传
-   * @returns {Boolean} 返回比较结果，若实例版本大于参数版本，返回true，否则返回false
+   * @param {string|Version} version 版本号，如1.0.0或Version实例，必传
+   * @returns {boolean} 返回比较结果，若实例版本大于参数版本，返回true，否则返回false
    */
   gt(version) {
     checkRTAOrError(version, "version", true, [["String", Version]]);
@@ -82,8 +82,8 @@ class Version {
   }
   /**
    * @description 小于
-   * @param {String|Version} version 版本号，如1.0.0或Version实例，必传
-   * @returns {Boolean} 返回比较结果，若实例版本小于参数版本，返回true，否则返回false
+   * @param {string|Version} version 版本号，如1.0.0或Version实例，必传
+   * @returns {boolean} 返回比较结果，若实例版本小于参数版本，返回true，否则返回false
    */
   lt(version) {
     checkRTAOrError(version, "version", true, [["String", Version]]);
@@ -91,8 +91,8 @@ class Version {
   }
   /**
    * @description 等于
-   * @param {String|Version} version 版本号，如1.0.0或Version实例，必传
-   * @returns {Boolean} 返回比较结果，若实例版本等于参数版本，返回true，否则返回false
+   * @param {string|Version} version 版本号，如1.0.0或Version实例，必传
+   * @returns {boolean} 返回比较结果，若实例版本等于参数版本，返回true，否则返回false
    */
   eq(version) {
     checkRTAOrError(version, "version", true, [["String", Version]]);
@@ -100,8 +100,8 @@ class Version {
   }
   /**
    * @description 不等于
-   * @param {String|Version} version 版本号，如1.0.0或Version实例，必传
-   * @returns {Boolean} 返回比较结果，若实例版本不等于参数版本，返回true，否则返回false
+   * @param {string|Version} version 版本号，如1.0.0或Version实例，必传
+   * @returns {boolean} 返回比较结果，若实例版本不等于参数版本，返回true，否则返回false
    */
   neq(version) {
     checkRTAOrError(version, "version", true, [["String", Version]]);
@@ -109,8 +109,8 @@ class Version {
   }
   /**
    * @description 大于等于
-   * @param {String|Version} version 版本号，如1.0.0或Version实例，必传
-   * @returns {Boolean} 返回比较结果，若实例版本大于等于参数版本，返回true，否则返回false
+   * @param {string|Version} version 版本号，如1.0.0或Version实例，必传
+   * @returns {boolean} 返回比较结果，若实例版本大于等于参数版本，返回true，否则返回false
    */
   gte(version) {
     checkRTAOrError(version, "version", true, [["String", Version]]);
@@ -118,8 +118,8 @@ class Version {
   }
   /**
    * @description 小于等于
-   * @param {String|Version} version 版本号，如1.0.0或Version实例，必传
-   * @returns {Boolean} 返回比较结果，若实例版本小于等于参数版本，返回true，否则返回false
+   * @param {string|Version} version 版本号，如1.0.0或Version实例，必传
+   * @returns {boolean} 返回比较结果，若实例版本小于等于参数版本，返回true，否则返回false
    */
   lte(version) {
     checkRTAOrError(version, "version", true, [["String", Version]]);
@@ -127,9 +127,9 @@ class Version {
   }
   /**
    * @description 比较方法（静态）
-   * @param {String|Version} version1 版本号1，如1.0.0或Version实例，必传
-   * @param {String|Version} version2 版本号2，如1.0.0或Version实例，必传
-   * @returns {Number} 返回比较结果，若版本号1大于版本号2，返回1；相等，返回0；小于，返回-1
+   * @param {string|Version} version1 版本号1，如1.0.0或Version实例，必传
+   * @param {string|Version} version2 版本号2，如1.0.0或Version实例，必传
+   * @returns {number} 返回比较结果，若版本号1大于版本号2，返回1；相等，返回0；小于，返回-1
    */
   static compare(version1, version2) {
     checkRTAOrError(version1, "version1", true, [["String", Version]]);
@@ -140,10 +140,10 @@ class Version {
   }
   /**
    * @description 任意比较符号比较
-   * @param {String|Version} version1 版本号1，如1.0.0或Version实例，必传
-   * @param {String} symbol 比较符号，如>、<、>=、lt、gte等，必传
-   * @param {String|Version} version2 版本号2，如1.0.0或Version实例，必传
-   * @returns {Boolean} 返回比较结果，若版本号1和版本号2在对应符号意义的比较上成立，返回true，否则返回false
+   * @param {string|Version} version1 版本号1，如1.0.0或Version实例，必传
+   * @param {string} symbol 比较符号，如>、<、>=、lt、gte等，必传
+   * @param {string|Version} version2 版本号2，如1.0.0或Version实例，必传
+   * @returns {boolean} 返回比较结果，若版本号1和版本号2在对应符号意义的比较上成立，返回true，否则返回false
    */
   static compareWith(version1, symbol, version2) {
     checkRTAOrError(version1, "version1", true, [["String", Version]]);

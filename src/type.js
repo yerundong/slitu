@@ -17,8 +17,8 @@
 
 /**
  * @description 返回类型名称
- * @param {Any} value 目标数据
- * @returns {String} 返回字符串类型的类型，如'Object'
+ * @param {any} value 目标数据
+ * @returns {string} 返回字符串类型的类型，如'Object'
  * 注意：仅返回基本类型，不包括自定义类类型、拓展类型
  */
 export const getType = (value) => {
@@ -29,16 +29,16 @@ export const getType = (value) => {
 
 /**
  * @description 判断数据是引用类型还是基本类型
- * @param {Any} value 目标数据
- * @returns {Boolean}
+ * @param {any} value 目标数据
+ * @returns {boolean}
  */
 export const getTypeOf = (value) =>
   ["object", "function"].includes(typeof value) ? "refer" : "basic";
 
 /**
  * @description 是否 Number 类型（不包含NaN）
- * @param {Any} value 目标数据
- * @returns {Boolean}
+ * @param {any} value 目标数据
+ * @returns {boolean}
  */
 export const isNum = (value) => {
   return getType(value) === "Number";
@@ -46,8 +46,8 @@ export const isNum = (value) => {
 
 /**
  * @description 是否 Boolean 类型
- * @param {Any} value 目标数据
- * @returns {Boolean}
+ * @param {any} value 目标数据
+ * @returns {boolean}
  */
 export const isBool = (value) => {
   return getType(value) === "Boolean";
@@ -55,8 +55,8 @@ export const isBool = (value) => {
 
 /**
  * @description 是否 String 类型
- * @param {Any} value 目标数据
- * @returns {Boolean}
+ * @param {any} value 目标数据
+ * @returns {boolean}
  */
 export const isStr = (value) => {
   return getType(value) === "String";
@@ -64,8 +64,8 @@ export const isStr = (value) => {
 
 /**
  * @description 是否 Array 类型
- * @param {Any} value 目标数据
- * @returns {Boolean}
+ * @param {any} value 目标数据
+ * @returns {boolean}
  */
 export const isArr = (value) => {
   return Array.isArray(value);
@@ -73,8 +73,8 @@ export const isArr = (value) => {
 
 /**
  * @description 是否 Object 类型
- * @param {Any} value 目标数据
- * @returns {Boolean}
+ * @param {any} value 目标数据
+ * @returns {boolean}
  */
 export const isObj = (value) => {
   return getType(value) === "Object";
@@ -82,8 +82,8 @@ export const isObj = (value) => {
 
 /**
  * @description 是否 Function 类型
- * @param {Any} value 目标数据
- * @returns {Boolean}
+ * @param {any} value 目标数据
+ * @returns {boolean}
  */
 export const isFunc = (value) => {
   return getType(value) === "Function";
@@ -91,8 +91,8 @@ export const isFunc = (value) => {
 
 /**
  * @description 是否 null 类型
- * @param {Any} value 目标数据
- * @returns {Boolean}
+ * @param {any} value 目标数据
+ * @returns {boolean}
  */
 export const isNul = (value) => {
   return value === null;
@@ -100,8 +100,8 @@ export const isNul = (value) => {
 
 /**
  * @description 是否 undefined 类型
- * @param {Any} value 目标数据
- * @returns {Boolean}
+ * @param {any} value 目标数据
+ * @returns {boolean}
  */
 export const isUndef = (value) => {
   return value === undefined;
@@ -109,18 +109,18 @@ export const isUndef = (value) => {
 
 /**
  * @description 是否是 NaN 类型
- * @param {Any} value 目标数据
- * @returns {Boolean}
+ * @param {any} value 目标数据
+ * @returns {boolean}
  */
 export const isNaN = (value) => {
   return Number.isNaN(value);
 };
 
 /**
- * @description 判断是否 LikeNumber 类型，即类数字
+ * @description 判断是否 LikeNumber 类型，即类数字类型
  * 类数字类型：123、"123"
- * @param {Any} value 目标数据
- * @returns {Boolean}
+ * @param {any} value 目标数据
+ * @returns {boolean}
  */
 export const isLikeNum = (value) => {
   if (!isNum(value) && !isStr(value)) return false;
@@ -131,37 +131,37 @@ export const isLikeNum = (value) => {
 };
 
 /**
- * @description 判断数据是否是 ValidString 类型：非空字符
- * @param {Any} value 目标数据
- * @returns {Boolean}
+ * @description 判断数据是否是 ValidString 类型，即非空字符类型
+ * @param {any} value 目标数据
+ * @returns {boolean}
  */
 export const isValidStr = (value) => isStr(value) && value !== "";
 
 /**
- * @description 判断数据是否是 Nil 类型： undefined, null 之一
- * @param {Any} value 目标数据
- * @returns {Boolean}
+ * @description 判断数据是否是 Nil 类型，即 undefined, null 之一
+ * @param {any} value 目标数据
+ * @returns {boolean}
  */
 export const isNil = (value) => [undefined, null].includes(value);
 
 /**
- * @description 判断数据是否是 Invalid 类型：undefined, null, NaN 之一
- * @param {Any} value 目标数据
- * @returns {Boolean}
+ * @description 判断数据是否是 Invalid 类型，即 undefined, null, NaN 之一
+ * @param {any} value 目标数据
+ * @returns {boolean}
  */
 export const isInvalid = (value) => [undefined, null, NaN].includes(value);
 
 /**
- * @description 判断数据是否是 Void 类型： undefined, null, NaN, '' 之一
- * @param {Any} value 目标数据
- * @returns {Boolean}
+ * @description 判断数据是否是 Void 类型，即 undefined, null, NaN, '' 之一
+ * @param {any} value 目标数据
+ * @returns {boolean}
  */
 export const isVoid = (value) => [undefined, null, NaN, ""].includes(value);
 
 /**
- * @description 判断数据是否是类假值类型：undefined, null, NaN, false, '', <=0 之一
- * @param {Any} value 目标数据
- * @returns {Boolean}
+ * @description 判断数据是否是类假值类型，即 undefined, null, NaN, false, '', <=0 之一
+ * @param {any} value 目标数据
+ * @returns {boolean}
  */
 export const isLikeFalse = (value) =>
   [undefined, null, NaN, false, ""].includes(value) ||
@@ -169,8 +169,8 @@ export const isLikeFalse = (value) =>
 
 /**
  * @description 检查是否为原生内置类（如Map、Array等）
- * @param {Any} value 目标数据
- * @returns {Boolean}
+ * @param {any} value 目标数据
+ * @returns {boolean}
  */
 export const isNativeClass = (value) => {
   // 首先判断是否为函数，类本质上是特殊的函数
@@ -202,8 +202,8 @@ export const isNativeClass = (value) => {
 
 /**
  * @description 检查是否为自定义类（使用class语法定义）
- * @param {Any} value 目标数据
- * @returns {Boolean}
+ * @param {any} value 目标数据
+ * @returns {boolean}
  */
 export const isCustomClass = (value) => {
   // 首先判断是否为函数，类本质上是特殊的函数
@@ -222,8 +222,8 @@ export const isCustomClass = (value) => {
 
 /**
  * @description 判断数据是否是类，可用于区分类和普通函数
- * @param {Any} value 目标数据
- * @returns {Boolean}
+ * @param {any} value 目标数据
+ * @returns {boolean}
  */
 export const isClass = (value) => {
   return isCustomClass(value) || isNativeClass(value);
@@ -231,9 +231,9 @@ export const isClass = (value) => {
 
 /**
  * @description 判断数据是否是类型之一
- * @param {Any} value 目标数据
- * @param {String|Class|Array<String|Class>} expType 期望类型，必传。支持自定义类类型、拓展类型。若是自定义类类型，仅支持传入class，不支持String
- * @returns {Boolean}
+ * @param {any} value 目标数据
+ * @param {string|Function|Array<string|Function>} expType 期望类型，必传。支持自定义类类型、拓展类型。若是自定义类类型，仅支持传入class，不支持String
+ * @returns {boolean}
  */
 export const isInTypes = (value, expType) => {
   if (!isArr(expType)) expType = [expType];
@@ -252,9 +252,9 @@ export const isInTypes = (value, expType) => {
 
 /**
  * @description 判断数据是否不是类型之一
- * @param {Any} value 数据
- * @param {String|Class|Array<String|Class>} expType 期望类型，必传。支持自定义类类型、拓展类型。若是自定义类类型，仅支持传入class，不支持String
- * @returns {Boolean}
+ * @param {any} value 数据
+ * @param {string|Function|Array<string|Function>} expType 期望类型，必传。支持自定义类类型、拓展类型。若是自定义类类型，仅支持传入class，不支持String
+ * @returns {boolean}
  */
 export const isNotInTypes = (value, expType) => {
   return !isInTypes(value, expType);
@@ -262,9 +262,9 @@ export const isNotInTypes = (value, expType) => {
 
 /**
  * @description 值是否是拓展类型之一
- * @param {Any} value 数据
- * @param {String|Class|Array<String|Class>} expType 期望类型，必传。支持自定义类类型、拓展类型。若是自定义类类型，仅支持传入class，不支持String
- * @returns {Boolean}
+ * @param {any} value 数据
+ * @param {string|Function|Array<string|Function>} expType 期望类型，必传。支持自定义类类型、拓展类型。若是自定义类类型，仅支持传入class，不支持String
+ * @returns {boolean}
  */
 export const isInExtTypes = (value, expType) => {
   const methods = {
@@ -284,9 +284,9 @@ export const isInExtTypes = (value, expType) => {
 
 /**
  * @description 判断两个值的类型是否相同
- * @param {Any} value1 数据1
- * @param {Any} value2 数据2
- * @returns {Boolean}
+ * @param {any} value1 数据1
+ * @param {any} value2 数据2
+ * @returns {boolean}
  */
 export const isTypeEqual = (value1, value2) =>
   getType(value1) === getType(value2);

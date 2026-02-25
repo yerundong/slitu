@@ -12,9 +12,9 @@ import {
 
 /**
  * @description 检查参数是否符合必传性，若不符合，抛出异常
- * @param {Any} value 参数值
- * @param {String} name 参数名称，必传
- * @param {String} errorTip 异常提示
+ * @param {any} value 参数值
+ * @param {string} name 参数名称，必传
+ * @param {string} errorTip 异常提示
  */
 export const checkRequiredOrError = (value, name, errorTip = "") => {
   if (isUndef(name)) throw new Error(`Missing required parameter: "name".`);
@@ -34,11 +34,11 @@ export const checkRequiredOrError = (value, name, errorTip = "") => {
 
 /**
  * @description 检查传入参数与期望类型是否一致，若不一致，抛出异常
- * @param {Any} value 参数值
- * @param {String} name 参数名称，必传
- * @param {String|Class|Array<String|Class>} expType 期望类型，必传。支持自定义类类型、拓展类型。若是自定义类类型，仅支持传入class，不支持String
- * @param {Boolean} exclUndefined 是否排除undefined，即值为undefined，不参与校验，默认排除
- * @param {String} errorTip 异常提示
+ * @param {any} value 参数值
+ * @param {string} name 参数名称，必传
+ * @param {string|Class|Array<string|Class>} expType 期望类型，必传。支持自定义类类型、拓展类型。若是自定义类类型，仅支持传入class，不支持String
+ * @param {boolean} exclUndefined 是否排除undefined，即值为undefined，不参与校验，默认排除
+ * @param {string} errorTip 异常提示
  */
 export const checkTypeOrError = (
   value,
@@ -57,7 +57,7 @@ export const checkTypeOrError = (
 
   if (isNotInTypes(expType, ["String", "Class", "Array"]))
     throw new Error(
-      `Expected parameter "expType" to be String|Class|Array, got ${expTypeType}.`
+      `Expected parameter "expType" to be string|Class|Array, got ${expTypeType}.`
     );
 
   if (!isBool(exclUndefined))
@@ -93,10 +93,10 @@ export const checkTypeOrError = (
 
 /**
  * @description 检查参数是否在可选值范围，若不在，抛出异常
- * @param {Any} value 参数值
- * @param {String} name 参数名称，必传
- * @param {Array<Any>|Function} allowedValues 可选值，必传
- * @param {String} errorTip 异常提示
+ * @param {any} value 参数值
+ * @param {string} name 参数名称，必传
+ * @param {Array<any>|Function} allowedValues 可选值，必传
+ * @param {string} errorTip 异常提示
  */
 export const checkAllowableOrError = (
   value,
@@ -134,8 +134,8 @@ export const checkAllowableOrError = (
 
 /**
  * @description 依次检查必传性符合、类型符合、可选值符合，RTA代表required、type、allowable
- * @param {Any} value 参数值
- * @param {String} name 参数名称，必传
+ * @param {any} value 参数值
+ * @param {string} name 参数名称，必传
  * @param {Boolean|Array} R_params checkRequiredOrError的除value、name外的参数，传入false则禁用该项校验
  * @param {Boolean|Array} T_params checkTypeOrError的除value、name外的参数，传入false则禁用该项校验
  * @param {Boolean|Array} A_params checkAllowableOrError的除value、name外的参数，传入false则禁用该项校验

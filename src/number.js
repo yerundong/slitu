@@ -32,7 +32,7 @@ export const toDP = (value, dp, rm) =>
 /**
  * @description 获取数字整数位的位数
  * @param {LikeNumber} value 目标值，必传
- * @returns {String}
+ * @returns {string}
  */
 export const getIntFigure = (value) => {
   checkRTAOrError(value, "value", true, ["LikeNumber"]);
@@ -43,8 +43,8 @@ export const getIntFigure = (value) => {
 /**
  * @description 补足整数数位
  * @param {LikeNumber} value 目标值，必传
- * @param {Number} figture 位数
- * @returns {String}
+ * @param {number} figture 位数
+ * @returns {string}
  */
 export const completeIntDigit = (value, figture = 2) => {
   checkRTAOrError(value, "value", true, ["LikeNumber"]);
@@ -64,9 +64,9 @@ export const completeIntDigit = (value, figture = 2) => {
 
 /**
  * @description 判断数字是否相等，1===1, 1==='1'的情况都为true
- * @param {Any} value1
- * @param {Any} value2
- * @returns {Boolean}
+ * @param {any} value1
+ * @param {any} value2
+ * @returns {boolean}
  */
 export const numEq = (value1, value2) => {
   if (!isLikeNum(value1) || !isLikeNum(value2)) return false;

@@ -2,7 +2,7 @@ import { checkRTAOrError } from "./check";
 
 /**
  * @description 字符串去除所有空格
- * @param {String} value 目标字符，必传
+ * @param {string} value 目标字符，必传
  */
 export const trims = (value) => {
   checkRTAOrError(value, "value", true, ["String"]);
@@ -11,8 +11,8 @@ export const trims = (value) => {
 
 /**
  * @description 字符串超过某个长度剔除，并加上省略号（用于多行省略）
- * @param {String} value 目标字符，必传
- * @param {Number} length 限定长度，必传
+ * @param {string} value 目标字符，必传
+ * @param {number} length 限定长度，必传
  */
 export const strEllipsis = (value, length) => {
   checkRTAOrError(value, "value", true, ["String"]);

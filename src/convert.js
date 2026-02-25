@@ -3,7 +3,7 @@ import { pow, mul, div } from "./number";
 
 /**
  * @description object 转 formData
- * @param {Object} obj 目标对象，必传
+ * @param {object} obj 目标对象，必传
  */
 export const objectToFormData = (obj) => {
   checkRTAOrError(obj, "obj", true, ["Object"]);
@@ -16,7 +16,7 @@ export const objectToFormData = (obj) => {
 
 /**
  * @description formData 转 object
- * @param {Object} fd 目标formData，必传
+ * @param {object} fd 目标formData，必传
  */
 export const formDataToObject = (fd) => {
   checkRTAOrError(fd, "fd", true, ["FormData"]);
@@ -27,8 +27,8 @@ export const formDataToObject = (fd) => {
 
 /**
  * @description 数组转Map
- * @param {Array} list 数组
- * @param {Function} handle 转换处理函数
+ * @param {array} list 数组
+ * @param {function} handle 转换处理函数
  */
 export const arrayToMap = (
   list = [],
@@ -46,8 +46,8 @@ export const arrayToMap = (
 
 /**
  * @description Map转数组
- * @param {Map} map
- * @param {Function} handle 转换处理函数
+ * @param {map} map
+ * @param {function} handle 转换处理函数
  */
 export const mapToArray = (
   map = new Map(),
@@ -65,7 +65,7 @@ export const mapToArray = (
 
 /**
  * @description Map转Object
- * @param {Map} map
+ * @param {map} map
  */
 export const mapToObject = (map = new Map()) => {
   checkTypeOrError(map, "map", "Map");
@@ -78,9 +78,9 @@ export const mapToObject = (map = new Map()) => {
 
 /**
  * @description 比特单位之间的转换
- * @param {String} value 需要被转换的值，格式为数字+单位，如'1MB'，必传
- * @param {String} unit 需要转换目标的单位，如'KB'。单位支持："B", "KB", "MB", "GB", "TB", "PB", "EB"。
- * @returns {String} 返回字符串类型的数字，如'1024'
+ * @param {string} value 需要被转换的值，格式为数字+单位，如'1MB'，必传
+ * @param {string} unit 需要转换目标的单位，如'KB'。单位支持："B", "KB", "MB", "GB", "TB", "PB", "EB"。
+ * @returns {string} 返回字符串类型的数字，如'1024'
  */
 export const byteConvert = (value, unit = "B") => {
   checkRTAOrError(value, "value", true, ["String"]);

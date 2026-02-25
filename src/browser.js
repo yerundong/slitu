@@ -2,11 +2,11 @@ import { checkTypeOrError } from "./check";
 
 /**
  * @description 通过 object 数据生成 URL 查询字符串: "?a=1&b=2&c=3"
- * @param {Object} obj 目标对象
- * @param {Object} options 配置
- * @property {Boolean} prefix 生成的结果是否带?前缀，默认true
- * @property {Boolean} encode 是否对每个参数的键和值进行编码，默认false
- * @property {Boolean} stringify 是否对每个参数的值进行字符串化，默认false
+ * @param {object} obj 目标对象
+ * @param {object} options 配置
+ * @param {boolean} [options.prefix] 生成的结果是否带 ? 前缀，默认true
+ * @param {boolean} [options.encode] 是否对每个参数的键和值进行编码，默认false
+ * @param {boolean} [options.stringify] 是否对每个参数的值进行字符串化，默认false
  */
 export const stringifyQuery = (obj = {}, options = {}) => {
   checkTypeOrError(obj, "obj", "Object");
@@ -38,10 +38,10 @@ export const stringifyQuery = (obj = {}, options = {}) => {
 
 /**
  * @description 解析 URL 查询数据，生成 object 数据
- * @param {Object} obj URL 查询字符串
- * @param {Object} options 配置
- * @property {Boolean} encode 是否对每个参数的键和值进行编码，默认false
- * @property {Boolean} stringify 是否对每个参数的值进行逆字符串化，默认false
+ * @param {object} obj URL 查询字符串
+ * @param {object} options 配置
+ * @property {boolean} encode 是否对每个参数的键和值进行编码，默认false
+ * @property {boolean} stringify 是否对每个参数的值进行逆字符串化，默认false
  */
 export const parseQuery = (queryString = "", options = {}) => {
   checkTypeOrError(queryString, "queryString", "String");
@@ -77,10 +77,10 @@ export const parseQuery = (queryString = "", options = {}) => {
 
 /**
  * @description 从浏览器url中解析查询数据
- * @param {Object} options 配置
- * @property {String} from 原始数据来自：search-从search中解析（默认），hash-从hash解析，all-从search、hash中解析合并（相同字段，search会覆盖hash）
- * @property {Boolean} encode 是否对每个参数的键和值进行编码，默认false
- * @property {Boolean} stringify 是否对每个参数的值进行逆字符串化，默认false
+ * @param {object} options 配置
+ * @property {string} from 原始数据来自：search-从search中解析（默认），hash-从hash解析，all-从search、hash中解析合并（相同字段，search会覆盖hash）
+ * @property {boolean} encode 是否对每个参数的键和值进行编码，默认false
+ * @property {boolean} stringify 是否对每个参数的值进行逆字符串化，默认false
  */
 export const getUrlQuery = (options = {}) => {
   checkTypeOrError(options, "options", "Object");

@@ -134,8 +134,8 @@ const mimeTypeToExtension = {
 
 /**
  * @description 根据文件名截取拓展名
- * @param {String} fileName 文件名，必传
- * @param {String} extCase 大小写，可选值lower|upper|original
+ * @param {string} fileName 文件名，必传
+ * @param {string} extCase 大小写，可选值 lower|upper|original
  */
 export const getFileNameExtension = (fileName, extCase = "original") => {
   checkRTAOrError(fileName, "fileName", true, ["String"]);
@@ -155,8 +155,8 @@ export const getFileNameExtension = (fileName, extCase = "original") => {
 
 /**
  * @description 根据拓展名获取mime类型
- * @param {String} extension 拓展名：png、.png、JPG，不区分大小写，必传
- * @returns {String} mime类型
+ * @param {string} extension 拓展名：png、.png、JPG，不区分大小写，必传
+ * @returns {string} mime类型
  */
 export const getMimeTypeByExtension = (extension) => {
   checkRTAOrError(extension, "extension", true, ["String"]);
@@ -170,7 +170,7 @@ export const getMimeTypeByExtension = (extension) => {
 
 /**
  * @description 根据mime类型获取拓展名
- * @param {String} mimeType mime类型：image/png，必传
+ * @param {string} mimeType mime类型：image/png，必传
  * @returns {string} 拓展名
  */
 export const getExtensionByMimeType = (mimeType) => {
@@ -184,8 +184,8 @@ export const getExtensionByMimeType = (mimeType) => {
 
 /**
  * @description base64数据转成blob
- * @param {String} base64 base64数据(前缀可带可不带)，必传
- * @param {String} contentType 拓展名或mime类型
+ * @param {string} base64 base64数据(前缀可带可不带)，必传
+ * @param {string} contentType 拓展名或mime类型
  * 最终 MIME 类型优先级：contentType > base64 前缀 > 默认
  * @returns {Blob}
  */
@@ -227,10 +227,10 @@ export const base64ToBlob = (base64, contentType) => {
 
 /**
  * @description base64数据转成blob url
- * @param {String} base64 base64数据(前缀可带可不带)，必传
- * @param {String} contentType 拓展名或mime类型
+ * @param {string} base64 base64数据(前缀可带可不带)，必传
+ * @param {string} contentType 拓展名或mime类型
  * 最终 MIME 类型优先级：contentType > base64 前缀 > 默认
- * @returns {String}
+ * @returns {string}
  */
 export const base64ToBlobUrl = (base64, contentType) => {
   const blob = base64ToBlob(base64, contentType);
@@ -240,7 +240,7 @@ export const base64ToBlobUrl = (base64, contentType) => {
 /**
  * @description blob数据转成base64数据(带前缀)
  * @param {Blob} blob blob数据，必传
- * @returns {String}
+ * @returns {string}
  */
 export const blobToBase64 = (blob) => {
   checkRTAOrError(blob, "blob", true, ["Blob"]);
@@ -254,8 +254,8 @@ export const blobToBase64 = (blob) => {
 
 /**
  * @description blob url转成base64数据(带前缀)
- * @param {String} blobUrl blob url，必传
- * @returns {String}
+ * @param {string} blobUrl blob url，必传
+ * @returns {string}
  */
 export const blobUrlToBase64 = async (blobUrl) => {
   checkRTAOrError(blobUrl, "blobUrl", true, ["String"]);
@@ -282,7 +282,7 @@ export const blobUrlToBase64 = async (blobUrl) => {
 
 /**
  * @description 解析base64数据(带前缀)获取base64数据(不带前缀)、mime、拓展名
- * @param {String} base64 base64数据(带前缀)，必传
+ * @param {string} base64 base64数据(带前缀)，必传
  */
 export const parseBase64 = (base64) => {
   checkRTAOrError(base64, "base64", true, ["String"]);
@@ -309,8 +309,8 @@ export const parseBase64 = (base64) => {
 
 /**
  * @description 补全Base64数据的前缀，生成完整的Data URL
- * @param {String} base64 不带前缀的base64字符串，必传
- * @param {String} extension 拓展名：png、.png、JPG，不区分大小写，必传
+ * @param {string} base64 不带前缀的base64字符串，必传
+ * @param {string} extension 拓展名：png、.png、JPG，不区分大小写，必传
  */
 export const completeBase64Prefix = (base64, extension) => {
   checkRTAOrError(base64, "base64", ["String"]);
@@ -325,8 +325,8 @@ export const completeBase64Prefix = (base64, extension) => {
 
 /**
  * @description 下载文件
- * @param {String} url 文件路径，必传
- * @param {String} fileName 文件名称
+ * @param {string} url 文件路径，必传
+ * @param {string} fileName 文件名称
  */
 export const downloadFile = (url, fileName = "下载文件") => {
   checkRTAOrError(url, "url", ["String"]);

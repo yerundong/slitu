@@ -5,7 +5,7 @@ import { checkRTAOrError } from "./check";
  * @description 生成符合 RFC 4122 标准的 UUID v4
  * 格式: xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx
  * 其中 y 为 8, 9, A 或 B
- * @returns {String} 生成的 UUID v4 字符串
+ * @returns {string} 生成的 UUID v4 字符串
  */
 export const uuid = () => {
   // 利用浏览器原生 API（如果存在），性能最优
@@ -26,7 +26,7 @@ export const uuid = () => {
 
 /**
  * @description: base64加密
- * @param {String} word 需要加密的字符串，必传
+ * @param {string} word 需要加密的字符串，必传
  */
 export const base64Encrypt = (word) => {
   checkRTAOrError(word, "word", true, ["String"]);
@@ -37,7 +37,7 @@ export const base64Encrypt = (word) => {
 
 /**
  * @description: base64解密
- * @param {String} word 需要解密的字符串，必传
+ * @param {string} word 需要解密的字符串，必传
  */
 export const base64Decrypt = (word) => {
   checkRTAOrError(word, "word", true, ["String"]);

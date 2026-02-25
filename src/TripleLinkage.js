@@ -10,11 +10,11 @@ import { isVoid } from "./type";
  */
 class TripleLinkage {
   /**
-   * @param {Object} options 构造配置，必传
-   * @property {Array} options.keys 字段名称及优先级， 如：[key1, key2, key3]
-   * @property {Function} options.key1 字段key1计算函数
-   * @property {Function} options.key2 字段key2计算函数
-   * @property {Function} options.key3 字段key3计算函数
+   * @param {object} options 构造配置，必传
+   * @property {array} options.keys 字段名称及优先级， 如：[key1, key2, key3]
+   * @property {function} options.key1 字段key1计算函数
+   * @property {function} options.key2 字段key2计算函数
+   * @property {function} options.key3 字段key3计算函数
    */
   constructor(options) {
     checkRTAOrError(options, "options", true, ["Object"]);
@@ -22,11 +22,11 @@ class TripleLinkage {
   }
 
   /**
-   * @param {Object} oprOpt 操作配置
-   * @property {Array} options.curKey 当前操作key
-   * @property {Any} options.key1 key1值
-   * @property {Any} options.key2 key2值
-   * @property {Any} options.key3 key3值
+   * @param {object} oprOpt 操作配置
+   * @property {array} options.curKey 当前操作key
+   * @property {any} options.key1 key1值
+   * @property {any} options.key2 key2值
+   * @property {any} options.key3 key3值
    */
   opr(oprOpt) {
     checkRTAOrError(oprOpt, "oprOpt", true, ["Object"]);
