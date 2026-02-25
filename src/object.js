@@ -58,7 +58,7 @@ export const removeInvalidProp = (value, options = {}) => {
 /**
  * @description 移除对象额外的属性
  * @param {object} value 目标对象，必传
- * @param {Array|Object} props 需要处理的属性集合，可以是key的数组，也可以取一个对象的key
+ * @param {Array|object} props 需要处理的属性集合，可以是key的数组，也可以取一个对象的key
  * @param {object} options 配置
  * @property {boolean} deepClone 是否深拷贝 默认：false
  * @property {string} type 类型：exclude-排除，include-包含，默认：exclude

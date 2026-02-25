@@ -94,7 +94,7 @@ export const safeJsonParse = (value, defRetValue) => {
 /**
  * @description 获取常用枚举数据结构
  * @param {Array<Object>} list json数据，格式为：[{name: 'ABC', value: '11001', ...}, ...]，必传
- * @param {Object|Array<Object>} options 配置项|多个配置项
+ * @param {object|Array<Object>} options 配置项|多个配置项
  * @property  {string} name 返回的枚举名称
  * @property  {string} type 返回的枚举类型，支持：Object、Array、Map、Set
  * @property  {string} key 属性名，当type为Object/Map时传
